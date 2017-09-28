@@ -31,7 +31,11 @@ public class UserController {
     public void register(@RequestHeader(value = "Authorization") String credentials) {
         CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
         userService.validateRegister(credentialsRequest.getEmail());
-        User user = new User(credentialsRequest.getEmail(), passwordEncoder.encode(credentialsRequest.getPassword()), UserRole.CUSTOMER);
+        User user = User.builder()
+                .email(credentialsRequest.getEmail())
+                .password(passwordEncoder.encode(credentialsRequest.getPassword()))
+                .userRole(UserRole.CUSTOMER)
+                .build();
         userService.addUser(user);
     }
 

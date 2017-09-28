@@ -1,10 +1,7 @@
 package complaint.model.user;
 
 import complaint.model.user.enums.UserRole;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -14,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -37,12 +35,5 @@ public class User {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-
-    public User(String email, String password, UserRole userRole) {
-        this.email = email;
-        this.password = password;
-        this.userRole = userRole;
-    }
 
 }

@@ -2,10 +2,7 @@ package complaint.model.complaint;
 
 import complaint.model.complaint.enums.Claim;
 import complaint.model.complaint.enums.Decision;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "employee_complaints")
 public class EmployeeComplaint {

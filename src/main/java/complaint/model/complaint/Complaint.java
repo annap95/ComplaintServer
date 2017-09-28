@@ -3,10 +3,7 @@ package complaint.model.complaint;
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,6 +12,7 @@ import java.util.Date;
 @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "complaints")
 public class Complaint {
