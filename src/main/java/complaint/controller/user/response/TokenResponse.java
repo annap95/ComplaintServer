@@ -1,8 +1,5 @@
 package complaint.controller.user.response;
 
-/**
- * Created by anna on 18.09.17.
- */
 public class TokenResponse {
     private String token;
 

@@ -3,17 +3,18 @@ package complaint.model.complaint;
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by anna on 18.09.17.
- */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "complaints")
 public class Complaint {
@@ -55,8 +56,6 @@ public class Complaint {
     @Enumerated(EnumType.STRING)
     private ComplaintStatus status;
 
-    public Complaint() {
-    }
 
     public Complaint(Customer customer, Employee employee, CustomerComplaint customerComplaint,
                      Date submitDate, EmployeeComplaint employeeComplaint, Date considerDate,

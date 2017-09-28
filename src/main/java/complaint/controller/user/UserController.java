@@ -12,10 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by anna on 18.09.17.
- */
-
 @RestController
 public class UserController {
 

@@ -1,8 +1,5 @@
 package complaint.security;
 
-/**
- * Created by anna on 18.09.17.
- */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

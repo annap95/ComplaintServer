@@ -8,9 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- * Created by anna on 22.09.17.
- */
 @Repository
 @Transactional
 public class EmployeeComplaintDaoImpl implements EmployeeComplaintDao {
@@ -27,11 +24,6 @@ public class EmployeeComplaintDaoImpl implements EmployeeComplaintDao {
     }
 
     @Override
-    public EmployeeComplaint find(long id) {
-        return entityManager.find(EmployeeComplaint.class, id);
-    }
-
-    @Override
     public void persist(EmployeeComplaint employeeComplaint) {
         entityManager.persist(employeeComplaint);
     }
@@ -45,4 +37,10 @@ public class EmployeeComplaintDaoImpl implements EmployeeComplaintDao {
     public void delete(EmployeeComplaint employeeComplaint) {
         entityManager.remove(entityManager.merge(employeeComplaint));
     }
+
+    @Override
+    public EmployeeComplaint findById(long id) {
+        return entityManager.find(EmployeeComplaint.class, id);
+    }
+
 }

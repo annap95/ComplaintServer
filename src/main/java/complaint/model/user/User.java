@@ -1,18 +1,19 @@
 package complaint.model.user;
 
 import complaint.model.user.enums.UserRole;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by anna on 18.09.17.
- */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -37,8 +38,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    public User() {
-    }
 
     public User(String email, String password, UserRole userRole) {
         this.email = email;

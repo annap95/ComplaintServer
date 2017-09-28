@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by anna on 22.09.17.
- */
 @Service
 public class ComplaintServiceImpl implements ComplaintService {
 
@@ -44,6 +41,6 @@ public class ComplaintServiceImpl implements ComplaintService {
 
     @Override
     public List<Complaint> getComplaints() {
-        return complaintDao.getComplaints();
+        return complaintDao.findAll();
     }
 }

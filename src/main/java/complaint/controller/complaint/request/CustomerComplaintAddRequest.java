@@ -4,9 +4,6 @@ import complaint.model.complaint.enums.Claim;
 
 import java.util.Date;
 
-/**
- * Created by anna on 22.09.17.
- */
 public class CustomerComplaintAddRequest {
     private String productDescription;
     private String invoiceNumber;

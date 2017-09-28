@@ -1,17 +1,18 @@
 package complaint.model.complaint;
 
 import complaint.model.complaint.enums.Claim;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by anna on 22.09.17.
- */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "customer_complaints")
 public class CustomerComplaint {
@@ -40,8 +41,6 @@ public class CustomerComplaint {
     @Enumerated(EnumType.STRING)
     private Claim claim;
 
-    public CustomerComplaint() {
-    }
 
     public CustomerComplaint(String productDescription, String invoiceNumber,
                              Date purchaseDate, Double price, String complaintReason,

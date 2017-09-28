@@ -1,8 +1,5 @@
 package complaint.security;
 
-/**
- * Created by anna on 18.09.17.
- */
 import complaint.model.user.User;
 import complaint.service.UserService;
 import io.jsonwebtoken.Jwts;

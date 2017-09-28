@@ -1,8 +1,5 @@
 package complaint.controller.user.request;
 
-/**
- * Created by anna on 18.09.17.
- */
 public class CredentialsRequest {
     private String email;
     private String password;

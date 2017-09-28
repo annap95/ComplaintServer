@@ -7,9 +7,6 @@ import complaint.model.complaint.enums.ComplaintStatus;
 
 import java.util.Date;
 
-/**
- * Created by anna on 25.09.17.
- */
 public class ComplaintResponse {
     private long complaintId;
     private Long customerId;

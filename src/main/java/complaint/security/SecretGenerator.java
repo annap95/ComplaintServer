@@ -1,8 +1,5 @@
 package complaint.security;
 
-/**
- * Created by anna on 18.09.17.
- */
 import java.security.SecureRandom;
 
 public class SecretGenerator {

@@ -1,8 +1,5 @@
 package complaint.security;
 
-/**
- * Created by anna on 18.09.17.
- */
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

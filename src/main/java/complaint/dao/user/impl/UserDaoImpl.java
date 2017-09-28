@@ -12,9 +12,6 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by anna on 18.09.17.
- */
 @Repository
 @Transactional
 public class UserDaoImpl implements UserDao {
@@ -28,11 +25,6 @@ public class UserDaoImpl implements UserDao {
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
-    }
-
-    @Override
-    public User find(long id) {
-        return entityManager.find(User.class, id);
     }
 
     @Override
@@ -51,13 +43,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
-        Query query = entityManager.createQuery("from User where email = :email");
-        query.setParameter("email", email);
-        List list = query.getResultList();
-        if(list == null || list.isEmpty())
-            return Optional.empty();
-        return Optional.of((User) list.get(0));
+    public User findById(long id) {
+        return entityManager.find(User.class, id);
+    }
+
+    @Override
+    public Optional findByEmail(String email) {
+        return entityManager.createQuery("from User where email = :email")
+                .setParameter("email", email)
+                .getResultList()
+                .stream()
+                .findFirst();
     }
 
 }

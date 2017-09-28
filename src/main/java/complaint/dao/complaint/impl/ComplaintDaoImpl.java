@@ -10,9 +10,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
-/**
- * Created by anna on 22.09.17.
- */
 @Repository
 @Transactional
 public class ComplaintDaoImpl implements ComplaintDao {
@@ -26,11 +23,6 @@ public class ComplaintDaoImpl implements ComplaintDao {
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
-    }
-
-    @Override
-    public Complaint find(long id) {
-        return entityManager.find(Complaint.class, id);
     }
 
     @Override
@@ -49,8 +41,12 @@ public class ComplaintDaoImpl implements ComplaintDao {
     }
 
     @Override
-    public List<Complaint> getComplaints() {
-        Query query = entityManager.createQuery("from Complaint");
-        return query.getResultList();
+    public Complaint findById(long id) {
+        return entityManager.find(Complaint.class, id);
+    }
+
+    @Override
+    public List findAll() {
+        return entityManager.createQuery("from Complaint").getResultList();
     }
 }

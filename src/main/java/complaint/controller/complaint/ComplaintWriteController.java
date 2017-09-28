@@ -11,9 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by anna on 18.09.17.
- */
 @RestController
 public class ComplaintWriteController {
 
@@ -30,7 +27,7 @@ public class ComplaintWriteController {
     @ResponseStatus(HttpStatus.CREATED)
     public String addComplaint(@RequestBody CustomerComplaintAddRequest request, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
-        Customer customer = userService.findCustomerByUserId(loggedUser.getUserId());
+        Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
         complaintService.addComplaint(customer, new CustomerComplaint());
         return "added";
     }

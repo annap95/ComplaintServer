@@ -15,9 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by anna on 18.09.17.
- */
 @RestController
 public class ComplaintReadController {
     private final UserService userService;

@@ -11,9 +11,6 @@ import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by anna on 18.09.17.
- */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -29,41 +26,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(long id) {
-        return null;
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email).orElseThrow(() -> new RuntimeException("No user found"));
-        // or else throw TODO
-    }
-
-    //public Customer getCustomerByUser(User user)
-
-    @Override
     public void validateRegister(String email) {
-        if(userDao.getUserByEmail(email).isPresent())
+        if(userDao.findByEmail(email).isPresent())
             throw new SecurityException("User exists");
     }
 
     @Override
     public void addUser(User user) {
         userDao.persist(user);
-        if(user.getUserRole() == UserRole.CUSTOMER) {
-            Customer customer = new Customer();
-            customer.setUser(user);
-            customerDao.persist(customer);
-        }
-        else {
-            Employee employee = new Employee();
-            employee.setUser(user);
-            employeeDao.persist(employee);
-        }
+        if(user.getUserRole() == UserRole.CUSTOMER)
+            customerDao.persist(Customer.builder()
+                    .user(user)
+                    .build());
+        else
+            employeeDao.persist(Employee.builder()
+                    .user(user)
+                    .build());
     }
 
     @Override
-    public Customer findCustomerByUserId(long userId) {
-        return customerDao.findCustomerByUserId(userId);
+    public User getUserById(long id) {
+        return userDao.findById(id);
+        // todo null
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDao.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("No user found"));
+        // todo exception
+    }
+
+    @Override
+    public Customer getCustomerByUser(long userId) {
+        return customerDao.findByUser(userId)
+                .orElseThrow(() -> new RuntimeException("No customer found"));
+        // todo exception
     }
 }

@@ -9,10 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
-/**
- * Created by anna on 22.09.17.
- */
 @Repository
 @Transactional
 public class CustomerDaoImpl implements CustomerDao {
@@ -26,11 +24,6 @@ public class CustomerDaoImpl implements CustomerDao {
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
-    }
-
-    @Override
-    public Customer find(long id) {
-        return entityManager.find(Customer.class, id);
     }
 
     @Override
@@ -49,13 +42,17 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer findCustomerByUserId(long userId) {
-        Query query = entityManager.createQuery("from Customer c where c.user.userId = :userId");
-        query.setParameter("userId", userId);
-        List list = query.getResultList();
-        if(list == null || list.isEmpty())
-            return null;
-        return (Customer) list.get(0);
+    public Customer findById(long id) {
+        return entityManager.find(Customer.class, id);
+    }
+
+    @Override
+    public Optional findByUser(long userId) {
+        return entityManager.createQuery("from Customer c where c.user.userId = :userId")
+                .setParameter("userId", userId)
+                .getResultList()
+                .stream()
+                .findFirst();
     }
 
 }

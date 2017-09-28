@@ -1,15 +1,16 @@
 package complaint.model.user;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-/**
- * Created by anna on 18.09.17.
- */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "employees")
 public class Employee {
@@ -29,12 +30,11 @@ public class Employee {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Employee() {
-    }
 
     public Employee(String name, String surname, User user) {
         this.name = name;
         this.surname = surname;
         this.user = user;
     }
+
 }
