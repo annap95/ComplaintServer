@@ -2,6 +2,8 @@ package complaint.dao.user;
 
 import complaint.model.user.Employee;
 
+import java.util.Optional;
+
 public interface EmployeeDao {
 
     void persist(Employee employee);
@@ -9,4 +11,5 @@ public interface EmployeeDao {
     void delete(Employee employee);
 
     Employee findById(long id);
+    Optional<Employee> findByUser(long userId);
 }

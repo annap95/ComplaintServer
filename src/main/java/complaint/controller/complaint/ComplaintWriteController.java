@@ -25,10 +25,17 @@ public class ComplaintWriteController {
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public String addComplaint(@RequestBody CustomerComplaintAddRequest request, Authentication authentication) {
+    public void addComplaint(@RequestBody CustomerComplaintAddRequest request, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
-        complaintService.addComplaint(customer, new CustomerComplaint());
-        return "added";
+        CustomerComplaint customerComplaint = CustomerComplaint.builder()
+                .productDescription(request.getProductDescription())
+                .invoiceNumber(request.getInvoiceNumber())
+                .purchaseDate(request.getPurchaseDate())
+                .price(request.getPrice())
+                .complaintReason(request.getComplaintReason())
+                .claim(request.getClaim())
+                .build();
+        complaintService.addCustomerComplaint(customer, customerComplaint);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -41,5 +42,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public Employee findById(long id) {
         return entityManager.find(Employee.class, id);
+    }
+
+    @Override
+    public Optional findByUser(long userId) {
+        return entityManager.createQuery("from Employee e where e.user.userId = :userId")
+                .setParameter("userId", userId)
+                .getResultList()
+                .stream()
+                .findFirst();
     }
 }

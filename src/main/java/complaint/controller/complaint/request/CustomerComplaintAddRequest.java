@@ -1,76 +1,30 @@
 package complaint.controller.complaint.request;
 
 import complaint.model.complaint.enums.Claim;
+import lombok.Value;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Value
 public class CustomerComplaintAddRequest {
-    private String productDescription;
-    private String invoiceNumber;
-    private Date purchaseDate;
-    private Double price;
-    private String complaintReason;
-    private Claim claim;
 
-    public CustomerComplaintAddRequest() {
-    }
+    @NotNull
+    String productDescription;
 
-    public CustomerComplaintAddRequest(String productDescription, String invoiceNumber,
-                                       Date purchaseDate, Double price,
-                                       String complaintReason, Claim claim) {
-        this.productDescription = productDescription;
-        this.invoiceNumber = invoiceNumber;
-        this.purchaseDate = purchaseDate;
-        this.price = price;
-        this.complaintReason = complaintReason;
-        this.claim = claim;
-    }
+    @NotNull
+    String invoiceNumber;
 
-    public String getProductDescription() {
-        return productDescription;
-    }
+    @NotNull
+    Date purchaseDate;
 
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
+    @NotNull
+    Double price;
 
-    public String getInvoiceNumber() {
-        return invoiceNumber;
-    }
+    @NotNull
+    String complaintReason;
 
-    public void setInvoiceNumber(String invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
-    }
+    @NotNull
+    Claim claim;
 
-    public Date getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(Date purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getComplaintReason() {
-        return complaintReason;
-    }
-
-    public void setComplaintReason(String complaintReason) {
-        this.complaintReason = complaintReason;
-    }
-
-    public Claim getClaim() {
-        return claim;
-    }
-
-    public void setClaim(Claim claim) {
-        this.claim = claim;
-    }
 }
