@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -41,8 +42,8 @@ public class ComplaintDaoImpl implements ComplaintDao {
     }
 
     @Override
-    public Complaint findById(long id) {
-        return entityManager.find(Complaint.class, id);
+    public Optional findById(long id) {
+        return Optional.ofNullable(entityManager.find(Complaint.class, id));
     }
 
     @Override

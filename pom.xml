@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>complaint</name>
+	<name>ComplaintServer</name>
 	<description>Complaints system</description>
 
 	<parent>

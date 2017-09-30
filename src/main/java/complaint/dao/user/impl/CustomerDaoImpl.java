@@ -42,8 +42,8 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer findById(long id) {
-        return entityManager.find(Customer.class, id);
+    public Optional findById(long id) {
+        return Optional.ofNullable(entityManager.find(Customer.class, id));
     }
 
     @Override

@@ -43,8 +43,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findById(long id) {
-        return entityManager.find(User.class, id);
+    public Optional findById(long id) {
+        return Optional.ofNullable(entityManager.find(User.class, id));
     }
 
     @Override

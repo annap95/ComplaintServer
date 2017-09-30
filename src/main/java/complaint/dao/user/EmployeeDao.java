@@ -10,6 +10,6 @@ public interface EmployeeDao {
     void update(Employee employee);
     void delete(Employee employee);
 
-    Employee findById(long id);
+    Optional<Employee> findById(long id);
     Optional<Employee> findByUser(long userId);
 }

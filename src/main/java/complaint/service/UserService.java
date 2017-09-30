@@ -1,6 +1,7 @@
 package complaint.service;
 
 import complaint.model.user.Customer;
+import complaint.model.user.Employee;
 import complaint.model.user.User;
 
 public interface UserService {
@@ -12,5 +13,6 @@ public interface UserService {
     User getUserByEmail(String email);
 
     Customer getCustomerByUser(long userId);
+    Employee getEmployeeByUser(long userId);
 
 }

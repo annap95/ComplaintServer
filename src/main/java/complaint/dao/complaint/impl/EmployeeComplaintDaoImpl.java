@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -39,8 +40,8 @@ public class EmployeeComplaintDaoImpl implements EmployeeComplaintDao {
     }
 
     @Override
-    public EmployeeComplaint findById(long id) {
-        return entityManager.find(EmployeeComplaint.class, id);
+    public Optional findById(long id) {
+        return Optional.ofNullable(entityManager.find(EmployeeComplaint.class, id));
     }
 
 }

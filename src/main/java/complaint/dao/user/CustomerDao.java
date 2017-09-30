@@ -10,6 +10,6 @@ public interface CustomerDao {
     void update(Customer customer);
     void delete(Customer customer);
 
-    Customer findById(long id);
+    Optional<Customer> findById(long id);
     Optional<Customer> findByUser(long userId);
 }

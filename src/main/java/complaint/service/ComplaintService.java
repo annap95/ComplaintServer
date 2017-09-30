@@ -14,4 +14,5 @@ public interface ComplaintService {
     void addEmployeeComplaint(long complaintId, Employee employee, EmployeeComplaint employeeComplaint);
 
     List<Complaint> getComplaints();
+    Complaint getComplaintById(long complaintId);
 }

@@ -38,19 +38,30 @@ public class ComplaintServiceImpl implements ComplaintService {
             .customerComplaint(customerComplaint)
             .submitDate(new Date())
             .build());
+        // todo status
     }
 
     @Override
     public void addEmployeeComplaint(long complaintId, Employee employee, EmployeeComplaint employeeComplaint) {
         employeeComplaintDao.persist(employeeComplaint);
-        // get complaint
-        // set
-        // update
+        Complaint complaint = getComplaintById(complaintId);
+        complaint.setEmployee(employee);
+        complaint.setEmployeeComplaint(employeeComplaint);
+        complaint.setConsiderDate(new Date());
+        complaintDao.update(complaint);
+        // todo status
     }
 
     @Override
     public List<Complaint> getComplaints() {
         return complaintDao.findAll();
+        // todo authorization
+    }
+
+    @Override
+    public Complaint getComplaintById(long complaintId) {
+        return complaintDao.findById(complaintId)
+                .orElseThrow(() -> new RuntimeException("No complaint found"));
         // todo authorization
     }
 }

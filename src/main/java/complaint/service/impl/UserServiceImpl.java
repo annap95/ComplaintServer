@@ -46,8 +46,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(long id) {
-        return userDao.findById(id);
-        // todo null
+        return userDao.findById(id)
+                .orElseThrow(() -> new RuntimeException("No user found"));
+        // todo exception
     }
 
     @Override
@@ -61,6 +62,13 @@ public class UserServiceImpl implements UserService {
     public Customer getCustomerByUser(long userId) {
         return customerDao.findByUser(userId)
                 .orElseThrow(() -> new RuntimeException("No customer found"));
+        // todo exception
+    }
+
+    @Override
+    public Employee getEmployeeByUser(long userId) {
+        return employeeDao.findByUser(userId)
+                .orElseThrow(() -> new RuntimeException("No employee found"));
         // todo exception
     }
 }

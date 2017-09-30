@@ -45,7 +45,7 @@ public class TokenService {
     public String generateToken(User user) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + TimeUnit.HOURS.toMillis(EXPIRATION_TIME));
-        
+
         return Jwts.builder()
                 .setHeaderParam("typ", TOKEN_TYPE)
                 .setHeaderParam("alg", ALGORITHM)

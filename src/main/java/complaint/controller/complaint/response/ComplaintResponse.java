@@ -4,9 +4,17 @@ import complaint.model.complaint.Complaint;
 import complaint.model.complaint.CustomerComplaint;
 import complaint.model.complaint.EmployeeComplaint;
 import complaint.model.complaint.enums.ComplaintStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ComplaintResponse {
     private long complaintId;
     private Long customerId;
@@ -19,25 +27,6 @@ public class ComplaintResponse {
     private Date acceptanceDate;
     private ComplaintStatus status;
 
-    public ComplaintResponse() {
-    }
-
-    public ComplaintResponse(long complaintId, long customerId, long employeeId,
-                             CustomerComplaint customerComplaint, Date submitDate,
-                             EmployeeComplaint employeeComplaint, Date considerDate,
-                             boolean accepted, Date acceptanceDate,
-                             ComplaintStatus status) {
-        this.complaintId = complaintId;
-        this.customerId = customerId;
-        this.employeeId = employeeId;
-        this.customerComplaint = customerComplaint;
-        this.submitDate = submitDate;
-        this.employeeComplaint = employeeComplaint;
-        this.considerDate = considerDate;
-        this.accepted = accepted;
-        this.acceptanceDate = acceptanceDate;
-        this.status = status;
-    }
 
     public ComplaintResponse(Complaint complaint) {
         this.complaintId = complaint.getComplaintId();
@@ -58,83 +47,4 @@ public class ComplaintResponse {
         this.status = complaint.getStatus();
     }
 
-    public long getComplaintId() {
-        return complaintId;
-    }
-
-    public void setComplaintId(long complaintId) {
-        this.complaintId = complaintId;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public CustomerComplaint getCustomerComplaint() {
-        return customerComplaint;
-    }
-
-    public void setCustomerComplaint(CustomerComplaint customerComplaint) {
-        this.customerComplaint = customerComplaint;
-    }
-
-    public Date getSubmitDate() {
-        return submitDate;
-    }
-
-    public void setSubmitDate(Date submitDate) {
-        this.submitDate = submitDate;
-    }
-
-    public EmployeeComplaint getEmployeeComplaint() {
-        return employeeComplaint;
-    }
-
-    public void setEmployeeComplaint(EmployeeComplaint employeeComplaint) {
-        this.employeeComplaint = employeeComplaint;
-    }
-
-    public Date getConsiderDate() {
-        return considerDate;
-    }
-
-    public void setConsiderDate(Date considerDate) {
-        this.considerDate = considerDate;
-    }
-
-    public boolean isAccepted() {
-        return accepted;
-    }
-
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
-    }
-
-    public Date getAcceptanceDate() {
-        return acceptanceDate;
-    }
-
-    public void setAcceptanceDate(Date acceptanceDate) {
-        this.acceptanceDate = acceptanceDate;
-    }
-
-    public ComplaintStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ComplaintStatus status) {
-        this.status = status;
-    }
 }

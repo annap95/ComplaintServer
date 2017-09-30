@@ -3,6 +3,7 @@ package complaint.dao.complaint;
 import complaint.model.complaint.Complaint;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ComplaintDao {
 
@@ -10,6 +11,6 @@ public interface ComplaintDao {
     void update(Complaint complaint);
     void delete(Complaint complaint);
 
-    Complaint findById(long id);
+    Optional<Complaint> findById(long id);
     List<Complaint> findAll();
 }

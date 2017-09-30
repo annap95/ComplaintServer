@@ -40,8 +40,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee findById(long id) {
-        return entityManager.find(Employee.class, id);
+    public Optional findById(long id) {
+        return Optional.ofNullable(entityManager.find(Employee.class, id));
     }
 
     @Override
