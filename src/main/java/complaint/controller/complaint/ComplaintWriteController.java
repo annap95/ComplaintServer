@@ -11,6 +11,7 @@ import complaint.service.ComplaintService;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class ComplaintWriteController {
 
     @RequestMapping(value = "/complaint/customer", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public void addCustomerComplaint(@RequestBody CustomerComplaintAddRequest request, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
@@ -44,6 +46,7 @@ public class ComplaintWriteController {
 
     @RequestMapping(value = "/complaint/{complaintId}/consultant", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyAuthority('CONSULTANT','ADMIN')")
     public void addEmployeeComplaint(@PathVariable(name = "complaintId") long complaintId,
                                      @RequestBody EmployeeComplaintAddRequest request, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();

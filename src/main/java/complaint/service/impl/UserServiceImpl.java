@@ -9,10 +9,18 @@ import complaint.model.user.User;
 import complaint.model.user.enums.UserRole;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserDao userDao;
     private final CustomerDao customerDao;
@@ -70,5 +78,19 @@ public class UserServiceImpl implements UserService {
         return employeeDao.findByUser(userId)
                 .orElseThrow(() -> new RuntimeException("No employee found"));
         // todo exception
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) {
+        User user = userDao.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("No user found"));
+
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getUserRole().toString()));
+
+        UserDetails userDetails = new org.springframework.security.core.userdetails.
+                User(user.getEmail(), user.getPassword(), authorities);
+
+        return userDetails;
     }
 }

@@ -50,4 +50,18 @@ public class ComplaintDaoImpl implements ComplaintDao {
     public List findAll() {
         return entityManager.createQuery("from Complaint").getResultList();
     }
+
+    @Override
+    public List findByCustomer(long customerId) {
+        return entityManager.createQuery("from Complaint c where c.customer.customerId = :customerId")
+                .setParameter("customerId", customerId)
+                .getResultList();
+    }
+
+    @Override
+    public List findByEmployee(long employeeId) {
+        return entityManager.createQuery("from Complaint c where c.employee.employeeId = :employeeId")
+                .setParameter("employeeId", employeeId)
+                .getResultList();
+    }
 }

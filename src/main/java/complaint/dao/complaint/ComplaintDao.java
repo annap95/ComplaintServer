@@ -13,4 +13,6 @@ public interface ComplaintDao {
 
     Optional<Complaint> findById(long id);
     List<Complaint> findAll();
+    List<Complaint> findByCustomer(long customerId);
+    List<Complaint> findByEmployee(long employeeId);
 }
