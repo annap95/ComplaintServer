@@ -1,8 +1,10 @@
 package complaint.model.user;
 
+import complaint.model.complaint.Complaint;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,29 +41,11 @@ public class Customer {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "iban")
-    private String iban;
-
-    @Column(name = "data_processing_permission")
-    private boolean dataProcessingPermission;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<Complaint> complaints;
 
-    public Customer(String name, String surname, String streetName, String streetNumber,
-                    String postalCode, String town, String phone, String iban,
-                    boolean dataProcessingPermission, User user) {
-        this.name = name;
-        this.surname = surname;
-        this.streetName = streetName;
-        this.streetNumber = streetNumber;
-        this.postalCode = postalCode;
-        this.town = town;
-        this.phone = phone;
-        this.iban = iban;
-        this.dataProcessingPermission = dataProcessingPermission;
-        this.user = user;
-    }
 }

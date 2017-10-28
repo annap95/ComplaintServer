@@ -7,15 +7,15 @@ import lombok.Value;
 import javax.validation.constraints.NotNull;
 
 @Value
-public class EmployeeComplaintAddRequest {
+public class EmployeeComplaintMessageAddRequest {
 
     @NotNull
-    Decision decision;
+    String message;
 
     @NotNull
     Claim claim;
 
     @NotNull
-    String justification;
+    Decision decision;
 
 }

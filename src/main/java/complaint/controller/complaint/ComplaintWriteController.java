@@ -1,9 +1,10 @@
 package complaint.controller.complaint;
 
-import complaint.controller.complaint.request.CustomerComplaintAddRequest;
-import complaint.controller.complaint.request.EmployeeComplaintAddRequest;
-import complaint.model.complaint.CustomerComplaint;
-import complaint.model.complaint.EmployeeComplaint;
+import complaint.controller.complaint.request.ComplaintAddRequest;
+import complaint.controller.complaint.request.EmployeeComplaintMessageAddRequest;
+import complaint.model.complaint.ComplaintDetails;
+import complaint.model.complaint.CustomerComplaintMessage;
+import complaint.model.complaint.EmployeeComplaintMessage;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
@@ -11,9 +12,10 @@ import complaint.service.ComplaintService;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 public class ComplaintWriteController {
@@ -27,36 +29,50 @@ public class ComplaintWriteController {
         this.complaintService = complaintService;
     }
 
-    @RequestMapping(value = "/complaint/customer", method = RequestMethod.POST)
+    @RequestMapping(value = "/complaint", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('CUSTOMER')")
-    public void addCustomerComplaint(@RequestBody CustomerComplaintAddRequest request, Authentication authentication) {
+    public void addComplaint(@RequestBody ComplaintAddRequest request, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
-        CustomerComplaint customerComplaint = CustomerComplaint.builder()
+        ComplaintDetails complaintDetails = ComplaintDetails.builder()
                 .productDescription(request.getProductDescription())
                 .invoiceNumber(request.getInvoiceNumber())
                 .purchaseDate(request.getPurchaseDate())
                 .price(request.getPrice())
-                .complaintReason(request.getComplaintReason())
-                .claim(request.getClaim())
+                .iban(request.getIban())
                 .build();
-        complaintService.addCustomerComplaint(customer, customerComplaint);
+        CustomerComplaintMessage customerComplaintMessage = CustomerComplaintMessage.builder()
+                .message(request.getMessage())
+                .claim(request.getClaim())
+                .date(new Date())
+                .build();
+        complaintService.addComplaint(customer, complaintDetails, customerComplaintMessage);
     }
 
-    @RequestMapping(value = "/complaint/{complaintId}/consultant", method = RequestMethod.GET)
+    @RequestMapping(value = "/complaint/{complaintId}/customer", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyAuthority('CONSULTANT','ADMIN')")
-    public void addEmployeeComplaint(@PathVariable(name = "complaintId") long complaintId,
-                                     @RequestBody EmployeeComplaintAddRequest request, Authentication authentication) {
+    public void addCustomerComplaintMessage(Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+        Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
+        // todo
+
+    }
+
+    @RequestMapping(value = "/complaint/{complaintId}/employee", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addEmployeeComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
+                                            @RequestBody EmployeeComplaintMessageAddRequest request,
+                                            Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Employee employee = userService.getEmployeeByUser(loggedUser.getUserId());
-        EmployeeComplaint employeeComplaint = EmployeeComplaint.builder()
-                .decision(request.getDecision())
+        EmployeeComplaintMessage employeeComplaintMessage = EmployeeComplaintMessage.builder()
+                .message(request.getMessage())
                 .claim(request.getClaim())
-                .justification(request.getJustification())
+                .decision(request.getDecision())
+                .date(new Date())
+                .employee(employee)
                 .build();
-        complaintService.addEmployeeComplaint(complaintId, employee, employeeComplaint);
+        complaintService.addEmployeeComplaintMessage(complaintId, employeeComplaintMessage);
     }
 
 }

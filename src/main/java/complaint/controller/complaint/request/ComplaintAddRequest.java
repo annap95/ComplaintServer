@@ -7,7 +7,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Value
-public class CustomerComplaintAddRequest {
+public class ComplaintAddRequest {
+
+    /* details */
 
     @NotNull
     String productDescription;
@@ -22,7 +24,12 @@ public class CustomerComplaintAddRequest {
     Double price;
 
     @NotNull
-    String complaintReason;
+    String iban;
+
+    /* message */
+
+    @NotNull
+    String message;
 
     @NotNull
     Claim claim;

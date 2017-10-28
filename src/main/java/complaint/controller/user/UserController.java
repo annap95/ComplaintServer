@@ -35,6 +35,7 @@ public class UserController {
                 .email(credentialsRequest.getEmail())
                 .password(passwordEncoder.encode(credentialsRequest.getPassword()))
                 .userRole(UserRole.CUSTOMER)
+                .enabled(true)
                 .build();
         userService.addUser(user);
     }
@@ -54,12 +55,4 @@ public class UserController {
         return new CredentialsRequest(credentialsArray[0], credentialsArray[1]);
     }
 
-
-
-
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    @ResponseStatus(HttpStatus.OK)
-//    public String getString() {
-//        return "It works";
-//    }
 }

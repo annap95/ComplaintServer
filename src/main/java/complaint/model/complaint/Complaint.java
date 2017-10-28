@@ -2,11 +2,12 @@ package complaint.model.complaint;
 
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.user.Customer;
-import complaint.model.user.Employee;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,50 +23,29 @@ public class Complaint {
     @Column(name = "complaint_id")
     private long complaintId;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "complaint")
+    private ComplaintDetails complaintDetails;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "complaint")
+    private List<CustomerComplaintMessage> customerComplaintMessages;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_complaint_id")
-    private CustomerComplaint customerComplaint;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "complaint")
+    private List<EmployeeComplaintMessage> employeeComplaintMessages;
 
     @Column(name = "submit_date")
     private Date submitDate;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_complaint_id")
-    private EmployeeComplaint employeeComplaint;
-
     @Column(name = "consider_date")
     private Date considerDate;
-
-    @Column(name = "accepted")
-    private boolean accepted;
-
-    @Column(name = "acceptance_date")
-    private Date acceptanceDate;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ComplaintStatus status;
 
+    // current / final claim
 
-    public Complaint(Customer customer, Employee employee, CustomerComplaint customerComplaint,
-                     Date submitDate, EmployeeComplaint employeeComplaint, Date considerDate,
-                     boolean accepted, Date acceptanceDate, ComplaintStatus status) {
-        this.customer = customer;
-        this.employee = employee;
-        this.customerComplaint = customerComplaint;
-        this.submitDate = submitDate;
-        this.employeeComplaint = employeeComplaint;
-        this.considerDate = considerDate;
-        this.accepted = accepted;
-        this.acceptanceDate = acceptanceDate;
-        this.status = status;
-    }
 }
