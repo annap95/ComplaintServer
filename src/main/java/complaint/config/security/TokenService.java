@@ -1,4 +1,4 @@
-package complaint.security;
+package complaint.config.security;
 
 import complaint.model.user.User;
 import complaint.service.UserService;

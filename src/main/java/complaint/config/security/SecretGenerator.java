@@ -1,4 +1,4 @@
-package complaint.security;
+package complaint.config.security;
 
 import java.security.SecureRandom;
 

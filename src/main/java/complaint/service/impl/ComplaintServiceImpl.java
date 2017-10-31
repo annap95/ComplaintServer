@@ -1,18 +1,14 @@
 package complaint.service.impl;
 
 import complaint.model.complaint.*;
-import complaint.model.complaint.CustomerComplaintMessage;
-import complaint.model.complaint.EmployeeComplaintMessage;
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.user.Customer;
-import complaint.model.user.Employee;
 import complaint.repository.complaint.ComplaintDetailsRepository;
 import complaint.repository.complaint.ComplaintRepository;
 import complaint.repository.complaint.CustomerComplaintMessageRepository;
 import complaint.repository.complaint.EmployeeComplaintMessageRepository;
 import complaint.service.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -51,11 +47,12 @@ public class ComplaintServiceImpl implements ComplaintService {
     }
 
     @Override
-    public void addCustomerComplaintMessage(long complaintId) {
+    public void addCustomerComplaintMessage(long complaintId, CustomerComplaintMessage customerComplaintMessage) {
         // todo status, exception
         Complaint complaint = complaintRepository.findByComplaintId(complaintId)
                 .orElseThrow(() -> new RuntimeException("Complaint not found"));
-
+        customerComplaintMessage.setComplaint(complaint);
+        customerComplaintMessageRepository.save(customerComplaintMessage);
     }
 
     @Override

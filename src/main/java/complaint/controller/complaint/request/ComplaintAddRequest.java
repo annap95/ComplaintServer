@@ -34,4 +34,9 @@ public class ComplaintAddRequest {
     @NotNull
     Claim claim;
 
+    /* permission */
+
+    @NotNull
+    boolean dataProcessingPermission;
+
 }

@@ -4,7 +4,7 @@ import complaint.controller.user.request.CredentialsRequest;
 import complaint.controller.user.response.TokenResponse;
 import complaint.model.user.User;
 import complaint.model.user.enums.UserRole;
-import complaint.security.TokenService;
+import complaint.config.security.TokenService;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

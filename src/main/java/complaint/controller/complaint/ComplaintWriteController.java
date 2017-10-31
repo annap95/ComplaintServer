@@ -1,6 +1,7 @@
 package complaint.controller.complaint;
 
 import complaint.controller.complaint.request.ComplaintAddRequest;
+import complaint.controller.complaint.request.CustomerComplaintMessageAddRequest;
 import complaint.controller.complaint.request.EmployeeComplaintMessageAddRequest;
 import complaint.model.complaint.ComplaintDetails;
 import complaint.model.complaint.CustomerComplaintMessage;
@@ -51,10 +52,18 @@ public class ComplaintWriteController {
 
     @RequestMapping(value = "/complaint/{complaintId}/customer", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addCustomerComplaintMessage(Authentication authentication) {
+    public void addCustomerComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
+                                            @RequestBody CustomerComplaintMessageAddRequest request,
+                                            Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
         // todo
+        CustomerComplaintMessage customerComplaintMessage = CustomerComplaintMessage.builder()
+                .message(request.getMessage())
+                .claim(request.getClaim())
+                .date(new Date())
+                .build();
+        complaintService.addCustomerComplaintMessage(complaintId, customerComplaintMessage);
 
     }
 

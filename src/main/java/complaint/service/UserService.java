@@ -15,4 +15,9 @@ public interface UserService {
     Customer getCustomerByUser(long userId);
     Employee getEmployeeByUser(long userId);
 
+
+    // enable, disable users
+    // users list for admin (maybe consultant)
+
+    // employees registration for admin
 }
