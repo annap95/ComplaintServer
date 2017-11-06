@@ -1,7 +1,11 @@
 package complaint.controller.user;
 
 import complaint.controller.user.request.CredentialsRequest;
+import complaint.controller.user.request.CustomerRegisterRequest;
+import complaint.controller.user.request.EmployeeRegisterRequest;
 import complaint.controller.user.response.TokenResponse;
+import complaint.model.user.Customer;
+import complaint.model.user.Employee;
 import complaint.model.user.User;
 import complaint.model.user.enums.UserRole;
 import complaint.config.security.TokenService;
@@ -26,9 +30,10 @@ public class UserController {
         this.tokenService = tokenService;
     }
 
-    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/register/customer", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestHeader(value = "Authorization") String credentials) {
+    public void registerCustomer(@RequestHeader(value = "Authorization") String credentials,
+                                 @RequestBody CustomerRegisterRequest customerRegisterRequest) {
         CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
         userService.validateRegister(credentialsRequest.getEmail());
         User user = User.builder()
@@ -37,7 +42,35 @@ public class UserController {
                 .userRole(UserRole.CUSTOMER)
                 .enabled(true)
                 .build();
-        userService.addUser(user);
+        Customer customer = Customer.builder()
+                .name(customerRegisterRequest.getName())
+                .surname(customerRegisterRequest.getSurname())
+                .streetName(customerRegisterRequest.getStreetName())
+                .streetNumber(customerRegisterRequest.getStreetNumber())
+                .postalCode(customerRegisterRequest.getPostalCode())
+                .town(customerRegisterRequest.getTown())
+                .phone(customerRegisterRequest.getPhone())
+                .build();
+        userService.addCustomerUser(user, customer);
+    }
+
+    @RequestMapping(value = "/user/register/employee", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerEmployee(@RequestHeader(value = "Authorization") String credentials,
+                                 @RequestBody EmployeeRegisterRequest employeeRegisterRequest) {
+        CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
+        userService.validateRegister(credentialsRequest.getEmail());
+        User user = User.builder()
+                .email(credentialsRequest.getEmail())
+                .password(passwordEncoder.encode(credentialsRequest.getPassword()))
+                .userRole(employeeRegisterRequest.getUserRole())
+                .enabled(true)
+                .build();
+        Employee employee = Employee.builder()
+                .name(employeeRegisterRequest.getName())
+                .surname(employeeRegisterRequest.getSurname())
+                .build();
+        userService.addEmployeeUser(user, employee);
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)

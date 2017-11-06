@@ -1,5 +1,6 @@
 package complaint.model.complaint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import complaint.model.complaint.enums.Claim;
 import lombok.*;
 
@@ -30,6 +31,7 @@ public class CustomerComplaintMessage {
     @Column(name = "date")
     private Date date;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "complaint_id")
     private Complaint complaint;

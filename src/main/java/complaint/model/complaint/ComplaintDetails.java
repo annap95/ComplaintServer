@@ -1,9 +1,9 @@
 package complaint.model.complaint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -13,13 +13,14 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "complaints_details")
-public class ComplaintDetails implements Serializable {
+public class ComplaintDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "complaint_detail_id")
     private long complaintDetailId;
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "complaint_id")
     private Complaint complaint;

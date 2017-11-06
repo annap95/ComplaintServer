@@ -40,16 +40,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void addUser(User user) {
-        userRepository.save(user);
-        if(user.getUserRole() == UserRole.CUSTOMER)
-            customerRepository.save(Customer.builder()
-                    .user(user)
-                    .build());
-        else
-            employeeRepository.save(Employee.builder()
-                    .user(user)
-                    .build());
+    public void addCustomerUser(User user, Customer customer) {
+        User savedUser = userRepository.saveAndFlush(user);
+        customer.setUser(savedUser);
+        customerRepository.save(customer);
+    }
+
+    @Override
+    public void addEmployeeUser(User user, Employee employee) {
+        User savedUser = userRepository.saveAndFlush(user);
+        employee.setUser(savedUser);
+        employeeRepository.save(employee);
     }
 
     @Override
@@ -78,6 +79,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return employeeRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
         // todo exception
+    }
+
+    @Override
+    public void enableUser(User user) {
+
+    }
+
+    @Override
+    public void disableUser(User user) {
+
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return null;
     }
 
     @Override

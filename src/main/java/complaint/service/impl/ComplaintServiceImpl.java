@@ -67,7 +67,6 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public List<Complaint> getComplaints() {
         return complaintRepository.findAll();
-        // todo authorization
     }
 
     @Override
