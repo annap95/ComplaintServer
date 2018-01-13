@@ -1,8 +1,10 @@
 package complaint.model.user;
 
+import complaint.model.complaint.EmployeeComplaintMessage;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,11 +30,7 @@ public class Employee {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-    public Employee(String name, String surname, User user) {
-        this.name = name;
-        this.surname = surname;
-        this.user = user;
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
+    private List<EmployeeComplaintMessage> employeeComplaintMessages;
 
 }

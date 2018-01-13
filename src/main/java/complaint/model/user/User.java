@@ -1,6 +1,5 @@
 package complaint.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import complaint.model.user.enums.UserRole;
 import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -29,7 +28,6 @@ public class User {
 
     @NotNull
     @NotEmpty
-    @JsonIgnore // ?
     @Column(name = "password")
     private String password;
 
@@ -37,5 +35,9 @@ public class User {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    @NotNull
+    @Column(name = "enabled")
+    private boolean enabled;
 
 }

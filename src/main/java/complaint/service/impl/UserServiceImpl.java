@@ -1,19 +1,18 @@
 package complaint.service.impl;
 
-import complaint.dao.user.CustomerDao;
-import complaint.dao.user.EmployeeDao;
-import complaint.dao.user.UserDao;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
 import complaint.model.user.enums.UserRole;
+import complaint.repository.user.CustomerRepository;
+import complaint.repository.user.EmployeeRepository;
+import complaint.repository.user.UserRepository;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,75 +21,74 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private final UserDao userDao;
-    private final CustomerDao customerDao;
-    private final EmployeeDao employeeDao;
+    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, CustomerDao customerDao, EmployeeDao employeeDao) {
-        this.userDao = userDao;
-        this.customerDao = customerDao;
-        this.employeeDao = employeeDao;
+    public UserServiceImpl(UserRepository userRepository, CustomerRepository customerRepository,
+                           EmployeeRepository employeeRepository) {
+        this.userRepository = userRepository;
+        this.customerRepository = customerRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
     public void validateRegister(String email) {
-        if(userDao.findByEmail(email).isPresent())
-            throw new SecurityException("User exists");
+        if(userRepository.findByEmail(email).isPresent())
+            throw new SecurityException("User with this email already exists");
     }
 
     @Override
     public void addUser(User user) {
-        userDao.persist(user);
+        userRepository.save(user);
         if(user.getUserRole() == UserRole.CUSTOMER)
-            customerDao.persist(Customer.builder()
-                    .user(user)
-                    .build());
+            customerRepository.save(Customer.builder()
+                .user(user)
+                .build());
         else
-            employeeDao.persist(Employee.builder()
-                    .user(user)
-                    .build());
+            employeeRepository.save(Employee.builder()
+                .user(user)
+                .build());
     }
 
     @Override
     public User getUserById(long id) {
-        return userDao.findById(id)
-                .orElseThrow(() -> new RuntimeException("No user found"));
+        return userRepository.findByUserId(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         // todo exception
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userDao.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("No user found"));
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         // todo exception
     }
 
     @Override
     public Customer getCustomerByUser(long userId) {
-        return customerDao.findByUser(userId)
-                .orElseThrow(() -> new RuntimeException("No customer found"));
+        return customerRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
         // todo exception
     }
 
     @Override
     public Employee getEmployeeByUser(long userId) {
-        return employeeDao.findByUser(userId)
-                .orElseThrow(() -> new RuntimeException("No employee found"));
+        return employeeRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
         // todo exception
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        User user = userDao.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("No user found"));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getUserRole().toString()));
 
-        UserDetails userDetails = new org.springframework.security.core.userdetails.
-                User(user.getEmail(), user.getPassword(), authorities);
-
-        return userDetails;
+        return new org.springframework.security.core.userdetails
+                .User(user.getEmail(), user.getPassword(), authorities);
     }
 }

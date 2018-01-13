@@ -4,7 +4,7 @@ import complaint.controller.user.request.CredentialsRequest;
 import complaint.controller.user.response.TokenResponse;
 import complaint.model.user.User;
 import complaint.model.user.enums.UserRole;
-import complaint.security.TokenService;
+import complaint.config.security.TokenService;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class UserController {
         this.tokenService = tokenService;
     }
 
-    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/register/customer", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void register(@RequestHeader(value = "Authorization") String credentials) {
         CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
@@ -37,6 +37,12 @@ public class UserController {
                 .userRole(UserRole.CUSTOMER)
                 .build();
         userService.addUser(user);
+    }
+
+    @RequestMapping(value = "/user/register/employee", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void register(@RequestHeader(value = "Authorization") String credentials, String a) {
+
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
@@ -54,12 +60,4 @@ public class UserController {
         return new CredentialsRequest(credentialsArray[0], credentialsArray[1]);
     }
 
-
-
-
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    @ResponseStatus(HttpStatus.OK)
-//    public String getString() {
-//        return "It works";
-//    }
 }

@@ -2,8 +2,8 @@ package complaint.controller.complaint;
 
 import complaint.controller.complaint.request.CustomerComplaintAddRequest;
 import complaint.controller.complaint.request.EmployeeComplaintAddRequest;
-import complaint.model.complaint.CustomerComplaint;
-import complaint.model.complaint.EmployeeComplaint;
+import complaint.model.complaint.CustomerComplaintMessage;
+import complaint.model.complaint.EmployeeComplaintMessage;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
@@ -33,15 +33,8 @@ public class ComplaintWriteController {
     public void addCustomerComplaint(@RequestBody CustomerComplaintAddRequest request, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
-        CustomerComplaint customerComplaint = CustomerComplaint.builder()
-                .productDescription(request.getProductDescription())
-                .invoiceNumber(request.getInvoiceNumber())
-                .purchaseDate(request.getPurchaseDate())
-                .price(request.getPrice())
-                .complaintReason(request.getComplaintReason())
-                .claim(request.getClaim())
-                .build();
-        complaintService.addCustomerComplaint(customer, customerComplaint);
+        CustomerComplaintMessage customerComplaintMessage = null;
+        //complaintService.addCustomerComplaint(customer, customerComplaintMessage);
     }
 
     @RequestMapping(value = "/complaint/{complaintId}/consultant", method = RequestMethod.GET)
@@ -51,12 +44,11 @@ public class ComplaintWriteController {
                                      @RequestBody EmployeeComplaintAddRequest request, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Employee employee = userService.getEmployeeByUser(loggedUser.getUserId());
-        EmployeeComplaint employeeComplaint = EmployeeComplaint.builder()
+        EmployeeComplaintMessage employeeComplaintMessage = EmployeeComplaintMessage.builder()
                 .decision(request.getDecision())
                 .claim(request.getClaim())
-                .justification(request.getJustification())
                 .build();
-        complaintService.addEmployeeComplaint(complaintId, employee, employeeComplaint);
+        //complaintService.addEmployeeComplaint(complaintId, employee, employeeComplaintMessage);
     }
 
 }
