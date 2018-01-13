@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="users-admins-1" author="anna">
+        <insert tableName="users">
+            <column name="email" value="admin1@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="ADMIN"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="admin2@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="ADMIN"/>
+        </insert>
+    </changeSet>
+    <changeSet id="users-consultant-1" author="anna">
+        <insert tableName="users">
+            <column name="email" value="consultant1@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CONSULTANT"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="consultant2@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CONSULTANT"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="consultant3@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CONSULTANT"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="consultant4@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CONSULTANT"/>
+        </insert>
+    </changeSet>
+    <changeSet id="users-customers-1" author="anna">
+        <insert tableName="users">
+            <column name="email" value="customer1@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CUSTOMER"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="customer2@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CUSTOMER"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="customer3@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CUSTOMER"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="customer4@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CUSTOMER"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="customer5@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CUSTOMER"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="customer6@complaint.com"/>
+            <column name="password" value="$2a$10$K4eO6L//Zdy6S..c5Tl/gOaYr6vY6MwXBGOMd1xZtrwJtOyNzdrrC"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role" value="CUSTOMER"/>
+        </insert>
+    </changeSet>
+    <changeSet id="employees-admin-1" author="anna">
+        <insert tableName="employees">
+            <column name="name" value="Admin1Name"/>
+            <column name="surname" value="Admin1Surname"/>
+            <column name="user_id" value="1"/>
+        </insert>
+        <insert tableName="employees">
+            <column name="name" value="Admin2Name"/>
+            <column name="surname" value="Admin2Surname"/>
+            <column name="user_id" value="2"/>
+        </insert>
+    </changeSet>
+    <changeSet id="employees-consultants-1" author="anna">
+        <insert tableName="employees">
+            <column name="name" value="Consultant1Name"/>
+            <column name="surname" value="Consultant1Surname"/>
+            <column name="user_id" value="3"/>
+        </insert>
+        <insert tableName="employees">
+            <column name="name" value="Consultant2Name"/>
+            <column name="surname" value="Consultant2Surname"/>
+            <column name="user_id" value="4"/>
+        </insert>
+        <insert tableName="employees">
+            <column name="name" value="Consultant3Name"/>
+            <column name="surname" value="Consultant3Surname"/>
+            <column name="user_id" value="5"/>
+        </insert>
+        <insert tableName="employees">
+            <column name="name" value="Consultant4Name"/>
+            <column name="surname" value="Consultant4Surname"/>
+            <column name="user_id" value="6"/>
+        </insert>
+    </changeSet>
+    <changeSet id="customers-1" author="anna">
+        <insert tableName="customers">
+            <column name="name" value="Cust1Name"/>
+            <column name="surname" value="Cust1Surname"/>
+            <column name="phone" value="+48 789456123"/>
+            <column name="street_name" value="StreetName1"/>
+            <column name="street_number" value="12/1"/>
+            <column name="postal_code" value="12-345"/>
+            <column name="town" value="Cracow"/>
+            <column name="user_id" value="7"/>
+        </insert>
+        <insert tableName="customers">
+            <column name="name" value="Cust2Name"/>
+            <column name="surname" value="Cust2Surname"/>
+            <column name="phone" value="+48 789654321"/>
+            <column name="street_name" value="StreetName2"/>
+            <column name="street_number" value="15/4"/>
+            <column name="postal_code" value="23-456"/>
+            <column name="town" value="Warsaw"/>
+            <column name="user_id" value="8"/>
+        </insert>
+        <insert tableName="customers">
+            <column name="name" value="Cust3Name"/>
+            <column name="surname" value="Cust3Surname"/>
+            <column name="phone" value="+48 789412563"/>
+            <column name="street_name" value="StreetName3"/>
+            <column name="street_number" value="16/18"/>
+            <column name="postal_code" value="34-567"/>
+            <column name="town" value="Lodz"/>
+            <column name="user_id" value="9"/>
+        </insert>
+        <insert tableName="customers">
+            <column name="name" value="Cust4Name"/>
+            <column name="surname" value="Cust4Surname"/>
+            <column name="phone" value="+48 789365214"/>
+            <column name="street_name" value="StreetName4"/>
+            <column name="street_number" value="58/13"/>
+            <column name="postal_code" value="45-678"/>
+            <column name="town" value="Gdansk"/>
+            <column name="user_id" value="10"/>
+        </insert>
+        <insert tableName="customers">
+            <column name="name" value="Cust5Name"/>
+            <column name="surname" value="Cust5Surname"/>
+            <column name="phone" value="+48 798416352"/>
+            <column name="street_name" value="StreetName5"/>
+            <column name="street_number" value="56/17"/>
+            <column name="postal_code" value="12-345"/>
+            <column name="town" value="Cracow"/>
+            <column name="user_id" value="11"/>
+        </insert>
+        <insert tableName="customers">
+            <column name="name" value="Cust6Name"/>
+            <column name="surname" value="Cust6Surname"/>
+            <column name="phone" value="+48 789456123"/>
+            <column name="street_name" value="StreetName4"/>
+             <column name="street_number" value="168/31"/>
+            <column name="postal_code" value="78-987"/>
+            <column name="town" value="Warsaw"/>
+            <column name="user_id" value="12"/>
+        </insert>
+    </changeSet>
+    <changeSet id="complaints-1" author="anna">
+        <insert tableName="complaints">
+            <column name="customer_id" value="3"/>
+            <column name="status" value="SUBMITTED"/>
+            <column name="submit_date" valueDate="31-10-2017"/>
+        </insert>
+        <insert tableName="complaints">
+            <column name="customer_id" value="2"/>
+            <column name="status" value="SUBMITTED"/>
+            <column name="submit_date" valueDate="05-10-2017"/>
+        </insert>
+        <insert tableName="complaints">
+            <column name="customer_id" value="5"/>
+            <column name="status" value="SUBMITTED"/>
+            <column name="submit_date" valueDate="30-09-2017"/>
+        </insert>
+        <insert tableName="complaints">
+            <column name="customer_id" value="2"/>
+            <column name="status" value="SUBMITTED"/>
+            <column name="submit_date" valueDate="15-10-2017"/>
+        </insert>
+    </changeSet>
+    <changeSet id="complaint-details-1" author="anna">
+        <insert tableName="complaints_details">
+            <column name="product_description" value="Laptop firmy XYZ"/>
+            <column name="invoice_number" value="Paragon 123-456#asd"/>
+            <column name="purchase_date" valueDate="18-03-2015"/>
+            <column name="price" value="3650.00"/>
+            <column name="iban" value="PL12345678901234567890"/>
+            <column name="complaint_id" value="1"/>
+        </insert>
+        <insert tableName="complaints_details">
+            <column name="product_description" value="Urzadzenie wielofunkcyjne"/>
+            <column name="invoice_number" value="Faktura 453/2016"/>
+            <column name="purchase_date" valueDate="22-06-2017"/>
+            <column name="price" value="999.99"/>
+            <column name="iban" value="PL987456321456987412589"/>
+            <column name="complaint_id" value="2"/>
+        </insert>
+        <insert tableName="complaints_details">
+            <column name="product_description" value="Monitor 27 cali"/>
+            <column name="invoice_number" value="Faktura 543/2016"/>
+            <column name="purchase_date" valueDate="31-07-2017"/>
+            <column name="price" value="850.00"/>
+            <column name="iban" value="PL987654147852369852140"/>
+            <column name="complaint_id" value="3"/>
+        </insert>
+        <insert tableName="complaints_details">
+            <column name="product_description" value="Telewizor 50 cali"/>
+            <column name="invoice_number" value="Paragon 561-123#bnm"/>
+            <column name="purchase_date" valueDate="14-08-2016"/>
+            <column name="price" value="2950.00"/>
+            <column name="iban" value="PL564841210054787870323"/>
+            <column name="complaint_id" value="4"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

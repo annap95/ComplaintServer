@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package complaint.model.complaint;
 
 import complaint.model.complaint.enums.Claim;
@@ -35,3 +36,44 @@ public class CustomerComplaintMessage {
     private Complaint complaint;
 
 }
+=======
+package complaint.model.complaint;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import complaint.model.complaint.enums.Claim;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "customer_complaint_messages")
+public class CustomerComplaintMessage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "customer_complaint_message_id")
+    private long customerComplaintMessageId;
+
+    @Column(name = "message")
+    private String message;
+
+    @Column(name = "claim")
+    @Enumerated(EnumType.STRING)
+    private Claim claim;
+
+    @Column(name = "date")
+    private Date date;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "complaint_id")
+    private Complaint complaint;
+
+}
+>>>>>>> 1d870f4c01ae9426b090104f7d91ff74aa03ccfe
