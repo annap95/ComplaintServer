@@ -1,68 +1,3 @@
-<<<<<<< HEAD
-package complaint.controller.user;
-
-import complaint.controller.user.request.CredentialsRequest;
-import complaint.controller.user.response.TokenResponse;
-import complaint.model.user.User;
-import complaint.model.user.enums.UserRole;
-import complaint.config.security.TokenService;
-import complaint.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.Base64Utils;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-public class UserController {
-
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-    private final TokenService tokenService;
-
-    @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder, TokenService tokenService) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenService = tokenService;
-    }
-
-    @RequestMapping(value = "/user/register/customer", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestHeader(value = "Authorization") String credentials) {
-        CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
-        userService.validateRegister(credentialsRequest.getEmail());
-        User user = User.builder()
-                .email(credentialsRequest.getEmail())
-                .password(passwordEncoder.encode(credentialsRequest.getPassword()))
-                .userRole(UserRole.CUSTOMER)
-                .build();
-        userService.addUser(user);
-    }
-
-    @RequestMapping(value = "/user/register/employee", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestHeader(value = "Authorization") String credentials, String a) {
-
-    }
-
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    public TokenResponse login(@RequestHeader(value = "Authorization") String credentials) {
-        CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
-        User user = userService.getUserByEmail(credentialsRequest.getEmail());
-        if(!passwordEncoder.matches(credentialsRequest.getPassword(), user.getPassword()))
-            throw new SecurityException("Authentication failed");
-        return new TokenResponse(tokenService.generateToken(user));
-    }
-
-    private CredentialsRequest decodeCredentialsRequest(String credentials) {
-        String[] credentialsArray = new String(Base64Utils.decode(credentials.getBytes())).split(":");
-        return new CredentialsRequest(credentialsArray[0], credentialsArray[1]);
-    }
-
-}
-=======
 package complaint.controller.user;
 
 import complaint.controller.user.request.CredentialsRequest;
@@ -153,4 +88,3 @@ public class UserLoginRegisterController {
     }
 
 }
->>>>>>> 1d870f4c01ae9426b090104f7d91ff74aa03ccfe
