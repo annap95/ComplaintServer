@@ -1,8 +1,7 @@
 package complaint.controller.user;
 
 import complaint.controller.user.request.CredentialsRequest;
-import complaint.controller.user.request.CustomerRegisterRequest;
-import complaint.controller.user.request.EmployeeRegisterRequest;
+import complaint.controller.user.request.EmployeeRequest;
 import complaint.controller.user.response.TokenResponse;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
@@ -17,23 +16,24 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class UserController {
+public class UserLoginRegisterController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder, TokenService tokenService) {
+    public UserLoginRegisterController(UserService userService,
+                                       PasswordEncoder passwordEncoder,
+                                       TokenService tokenService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
     }
 
-    @RequestMapping(value = "/user/register/customer", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/register/customer", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerCustomer(@RequestHeader(value = "Authorization") String credentials,
-                                 @RequestBody CustomerRegisterRequest customerRegisterRequest) {
+    public void registerCustomer(@RequestHeader(value = "Authorization") String credentials) {
         CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
         userService.validateRegister(credentialsRequest.getEmail());
         User user = User.builder()
@@ -42,45 +42,44 @@ public class UserController {
                 .userRole(UserRole.CUSTOMER)
                 .enabled(true)
                 .build();
-        Customer customer = Customer.builder()
-                .name(customerRegisterRequest.getName())
-                .surname(customerRegisterRequest.getSurname())
-                .streetName(customerRegisterRequest.getStreetName())
-                .streetNumber(customerRegisterRequest.getStreetNumber())
-                .postalCode(customerRegisterRequest.getPostalCode())
-                .town(customerRegisterRequest.getTown())
-                .phone(customerRegisterRequest.getPhone())
-                .build();
+        Customer customer = new Customer();
         userService.addCustomerUser(user, customer);
     }
 
-    @RequestMapping(value = "/user/register/employee", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/register/employee", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void registerEmployee(@RequestHeader(value = "Authorization") String credentials,
-                                 @RequestBody EmployeeRegisterRequest employeeRegisterRequest) {
+                                 @RequestBody EmployeeRequest employeeRequest) {
         CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
         userService.validateRegister(credentialsRequest.getEmail());
         User user = User.builder()
                 .email(credentialsRequest.getEmail())
                 .password(passwordEncoder.encode(credentialsRequest.getPassword()))
-                .userRole(employeeRegisterRequest.getUserRole())
+                .userRole(employeeRequest.getUserRole())
                 .enabled(true)
                 .build();
         Employee employee = Employee.builder()
-                .name(employeeRegisterRequest.getName())
-                .surname(employeeRegisterRequest.getSurname())
+                .name(employeeRequest.getName())
+                .surname(employeeRequest.getSurname())
                 .build();
         userService.addEmployeeUser(user, employee);
     }
 
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/login", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public TokenResponse login(@RequestHeader(value = "Authorization") String credentials) {
         CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
         User user = userService.getUserByEmail(credentialsRequest.getEmail());
         if(!passwordEncoder.matches(credentialsRequest.getPassword(), user.getPassword()))
             throw new SecurityException("Authentication failed");
-        return new TokenResponse(tokenService.generateToken(user));
+        Long customerId = null;
+        Long employeeId = null;
+        if(user.isEmployee())
+            employeeId = userService.getEmployeeByUser(user.getUserId()).getEmployeeId();
+        else
+            customerId = userService.getCustomerByUser(user.getUserId()).getCustomerId();
+        return new TokenResponse(tokenService.generateToken(user), user.getUserRole(),
+                                 user.getUserId(), customerId, employeeId);
     }
 
     private CredentialsRequest decodeCredentialsRequest(String credentials) {

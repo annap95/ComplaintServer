@@ -1,5 +1,6 @@
 package complaint.model.complaint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import complaint.model.complaint.enums.Claim;
 import complaint.model.complaint.enums.Decision;
 import complaint.model.user.Employee;
@@ -40,6 +41,7 @@ public class EmployeeComplaintMessage {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "complaint_id")
     private Complaint complaint;

@@ -24,8 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anonymous().and()
                 .servletApi().and()
                 .authorizeRequests()
-                .antMatchers("/user/login").permitAll()
-                .antMatchers("/user/register/customer").permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/auth/register/customer").permitAll()
                 .antMatchers("/**").authenticated();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
@@ -50,4 +50,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 }

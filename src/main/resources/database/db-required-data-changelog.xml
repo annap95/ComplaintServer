@@ -233,5 +233,26 @@
             <column name="complaint_id" value="4"/>
         </insert>
     </changeSet>
-
+    <changeSet id="messages-1" author="anna">
+        <insert tableName="customer_complaint_messages">
+            <column name="claim" value="FULLPAYBACK"/>
+            <column name="date" valueDate="05-10-2017"/>
+            <column name="message" value="Message Customer Complaint Message 1"/>
+            <column name="complaint_id" value="2"/>
+        </insert>
+        <insert tableName="employee_complaint_messages">
+            <column name="claim" value="PARTIALPAYBACK"/>
+            <column name="date" valueDate="06-10-2017"/>
+            <column name="message" value="Message Employee Complaint Message 1"/>
+            <column name="decision" value="ACCEPT"/>
+            <column name="complaint_id" value="2"/>
+            <column name="employee_id" value="3"/>
+        </insert>
+        <insert tableName="customer_complaint_messages">
+            <column name="claim" value="FULLPAYBACK"/>
+            <column name="date" valueDate="07-10-2017"/>
+            <column name="message" value="Message Customer Complaint Message 2"/>
+            <column name="complaint_id" value="2"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

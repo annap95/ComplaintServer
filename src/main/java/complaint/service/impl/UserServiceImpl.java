@@ -3,7 +3,6 @@ package complaint.service.impl;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
-import complaint.model.user.enums.UserRole;
 import complaint.repository.user.CustomerRepository;
 import complaint.repository.user.EmployeeRepository;
 import complaint.repository.user.UserRepository;
@@ -40,6 +39,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void validateGetCustomer(User user, Customer customer) {
+        if(!user.isEmployee() && customer.getUser().getUserId() != user.getUserId())
+            throw new SecurityException("Authorization failed");
+    }
+
+    @Override
+    public void validatePutCustomer(User user, Customer customer) {
+        if(customer.getUser().getUserId() != user.getUserId())
+            throw new SecurityException("Authorization failed");
+    }
+
+    @Override
     public void addCustomerUser(User user, Customer customer) {
         User savedUser = userRepository.saveAndFlush(user);
         customer.setUser(savedUser);
@@ -51,6 +62,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User savedUser = userRepository.saveAndFlush(user);
         employee.setUser(savedUser);
         employeeRepository.save(employee);
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) {
+
     }
 
     @Override
@@ -75,6 +96,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Customer getCustomerById(long customerId) {
+        return customerRepository.findByCustomerId(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        // todo exception
+    }
+
+    @Override
     public Employee getEmployeeByUser(long userId) {
         return employeeRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
@@ -92,8 +120,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> getUsers() {
-        return null;
+    public List<Customer> getCustomers() {
+        return customerRepository.findAll();
+    }
+
+    @Override
+    public List<Employee> getEmployees() {
+        return employeeRepository.findAll();
     }
 
     @Override

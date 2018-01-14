@@ -9,16 +9,26 @@ public interface UserService {
 
     void validateRegister(String email);
 
+    void validateGetCustomer(User user, Customer customer);
+
+    void validatePutCustomer(User user, Customer customer);
+
     void addCustomerUser(User user, Customer customer);
 
     @PreAuthorize("hasAuthority('ADMIN')")
     void addEmployeeUser(User user, Employee employee);
+
+    void updateCustomer(Customer customer);
+
+    void updateEmployee(Employee employee);
 
     User getUserById(long id);
 
     User getUserByEmail(String email);
 
     Customer getCustomerByUser(long userId);
+
+    Customer getCustomerById(long customerId);
 
     Employee getEmployeeByUser(long userId);
 
@@ -28,5 +38,9 @@ public interface UserService {
     @PreAuthorize("hasAuthority('ADMIN')")
     void disableUser(User user);
 
-    List<User> getUsers();
+    @PreAuthorize("hasAnyAuthority('ADMIN','CONSULTANT')")
+    List<Customer> getCustomers();
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','CONSULTANT')")
+    List<Employee> getEmployees();
 }

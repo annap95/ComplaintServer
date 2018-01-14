@@ -6,7 +6,7 @@ import lombok.Value;
 import javax.validation.constraints.NotNull;
 
 @Value
-public class EmployeeRegisterRequest {
+public class EmployeeRequest {
 
     @NotNull
     UserRole userRole;

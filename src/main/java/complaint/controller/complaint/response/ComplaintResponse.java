@@ -22,6 +22,7 @@ public class ComplaintResponse implements Serializable {
     private long customerId;
 
     private List<CustomerComplaintMessage> customerComplaintMessages;
+    private List<EmployeeComplaintMessage> employeeComplaintMessages;
 
     private Date submitDate;
     private Date considerDate;
@@ -30,7 +31,6 @@ public class ComplaintResponse implements Serializable {
 
 //    private Long customerId;
 //    private Long employeeId;
-//    private CustomerComplaintMessage customerComplaintMessage;
 //    private EmployeeComplaintMessage employeeComplaintMessage;
 
 
@@ -40,6 +40,7 @@ public class ComplaintResponse implements Serializable {
         this.customerId = complaint.getCustomer().getCustomerId();
 
         this.customerComplaintMessages = complaint.getCustomerComplaintMessages();
+        this.employeeComplaintMessages = complaint.getEmployeeComplaintMessages();
 
         this.submitDate = complaint.getSubmitDate();
         this.considerDate = complaint.getConsiderDate();

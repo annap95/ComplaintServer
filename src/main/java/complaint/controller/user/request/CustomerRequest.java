@@ -2,10 +2,11 @@ package complaint.controller.user.request;
 
 import lombok.Value;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 
 @Value
-public class CustomerRegisterRequest {
+public class CustomerRequest {
 
     @NotNull
     String name;
@@ -27,5 +28,9 @@ public class CustomerRegisterRequest {
 
     @NotNull
     String phone;
+
+    @NotNull
+    @AssertTrue
+    boolean dataProcessingPermission;
 
 }

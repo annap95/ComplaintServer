@@ -1,20 +1,25 @@
 package complaint.controller.user.response;
 
+import complaint.model.user.enums.UserRole;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TokenResponse {
+
     private String token;
 
-    public TokenResponse() {
-    }
+    private UserRole userRole;
 
-    public TokenResponse(String token) {
-        this.token = token;
-    }
+    private Long userId;
 
-    public String getToken() {
-        return token;
-    }
+    private Long customerId;
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    private Long employeeId;
+
 }
