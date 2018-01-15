@@ -4,6 +4,7 @@ import complaint.controller.user.mapper.UserMapper;
 import complaint.controller.user.request.CustomerRequest;
 import complaint.controller.user.request.EmployeeRequest;
 import complaint.model.user.Customer;
+import complaint.model.user.Employee;
 import complaint.model.user.User;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class UserWriteController {
     @RequestMapping(value = "/user/customer/{customerId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateCustomer(@PathVariable(name = "customerId") long customerId,
-                                   @RequestBody CustomerRequest customerRequest, Authentication authentication) {
+                               @RequestBody CustomerRequest customerRequest, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Customer customer = userService.getCustomerById(customerId);
         userService.validatePutCustomer(loggedUser, customer);
@@ -34,10 +35,17 @@ public class UserWriteController {
         userService.updateCustomer(customer);
     }
 
-    @RequestMapping(value = "/user/employee", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user/employee/{employeeId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateEmployee(@RequestBody EmployeeRequest employeeRequest, Authentication authentication) {
-
+    public void updateEmployee(@PathVariable(name = "employeeId") long employeeId,
+                               @RequestBody EmployeeRequest employeeRequest, Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+        Employee employee = userService.getEmployeeById(employeeId);
+        userService.validatePutEmployee(loggedUser, employee);
+        if(employeeRequest.getUserRole() != employee.getUser().getUserRole())
+            userService.validateChangeRole(loggedUser);
+        userMapper.mapEmployeeRequestToEmployee(employeeRequest, employee);
+        userService.updateEmployee(employee);
     }
 
 }

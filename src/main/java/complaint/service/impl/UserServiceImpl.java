@@ -3,6 +3,7 @@ package complaint.service.impl;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
+import complaint.model.user.enums.UserRole;
 import complaint.repository.user.CustomerRepository;
 import complaint.repository.user.EmployeeRepository;
 import complaint.repository.user.UserRepository;
@@ -47,6 +48,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void validatePutCustomer(User user, Customer customer) {
         if(customer.getUser().getUserId() != user.getUserId())
+            throw new SecurityException("Authorization failed");
+    }
+
+    @Override
+    public void validatePutEmployee(User user, Employee employee) {
+        if(employee.getUser().getUserId() != user.getUserId())
+            throw new SecurityException("Authorization failed");
+    }
+
+    @Override
+    public void validateChangeRole(User user) {
+        if(user.getUserRole() != UserRole.ADMIN)
             throw new SecurityException("Authorization failed");
     }
 

@@ -39,9 +39,7 @@ public class UserReadController {
 
     @RequestMapping(value = "/user/employee/{employeeId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeResponse getEmployee(@PathVariable(name = "employeeId") long employeeId,
-                                        Authentication authentication) {
-        User loggedUser = (User) authentication.getPrincipal();
+    public EmployeeResponse getEmployee(@PathVariable(name = "employeeId") long employeeId) {
         Employee employee = userService.getEmployeeById(employeeId);
         // without validation
         EmployeeResponse employeeResponse = new EmployeeResponse();

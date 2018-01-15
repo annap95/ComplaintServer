@@ -13,6 +13,10 @@ public interface UserService {
 
     void validatePutCustomer(User user, Customer customer);
 
+    void validatePutEmployee(User user, Employee employee);
+
+    void validateChangeRole(User user);
+
     void addCustomerUser(User user, Customer customer);
 
     @PreAuthorize("hasAuthority('ADMIN')")
