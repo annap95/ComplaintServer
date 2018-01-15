@@ -32,6 +32,8 @@ public interface UserService {
 
     Employee getEmployeeByUser(long userId);
 
+    Employee getEmployeeById(long employeeId);
+
     @PreAuthorize("hasAuthority('ADMIN')")
     void enableUser(User user);
 

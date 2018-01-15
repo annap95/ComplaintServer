@@ -3,7 +3,9 @@ package complaint.controller.user.mapper.impl;
 import complaint.controller.user.mapper.UserMapper;
 import complaint.controller.user.request.CustomerRequest;
 import complaint.controller.user.response.CustomerResponse;
+import complaint.controller.user.response.EmployeeResponse;
 import complaint.model.user.Customer;
+import complaint.model.user.Employee;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,5 +34,13 @@ public class UserMapperImpl implements UserMapper {
         customerResponse.setTown(customer.getTown());
         customerResponse.setPhone(customer.getPhone());
         return customerResponse;
+    }
+
+    @Override
+    public EmployeeResponse mapEmployeeToEmployeeResponse(Employee employee, EmployeeResponse employeeResponse) {
+        employeeResponse.setEmployeeId(employee.getEmployeeId());
+        employeeResponse.setName(employee.getName());
+        employeeResponse.setSurname(employee.getSurname());
+        return employeeResponse;
     }
 }

@@ -4,6 +4,7 @@ import complaint.controller.user.mapper.UserMapper;
 import complaint.controller.user.response.CustomerResponse;
 import complaint.controller.user.response.EmployeeResponse;
 import complaint.model.user.Customer;
+import complaint.model.user.Employee;
 import complaint.model.user.User;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,17 @@ public class UserReadController {
         userService.validateGetCustomer(loggedUser, customer);
         CustomerResponse customerResponse = new CustomerResponse();
         return userMapper.mapCustomerToCustomerResponse(customer, customerResponse);
+    }
+
+    @RequestMapping(value = "/user/employee/{employeeId}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeResponse getEmployee(@PathVariable(name = "employeeId") long employeeId,
+                                        Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+        Employee employee = userService.getEmployeeById(employeeId);
+        // without validation
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        return userMapper.mapEmployeeToEmployeeResponse(employee, employeeResponse);
     }
 
     @RequestMapping(value = "/user/customer", method = RequestMethod.GET)

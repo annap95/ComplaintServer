@@ -110,6 +110,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Employee getEmployeeById(long employeeId) {
+        return employeeRepository.findByEmployeeId(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+        // todo exception
+    }
+
+    @Override
     public void enableUser(User user) {
 
     }
