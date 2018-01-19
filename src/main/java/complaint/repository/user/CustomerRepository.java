@@ -18,19 +18,16 @@ public interface CustomerRepository extends JpaRepository<Customer,Long> {
     Optional<Customer> findByUserId(@Param("userId") long userId);
 
     @Query("select c from Customer c where " +
-            "c.customerId like concat_ws('%', :#{#customer.customerId}, '%') " +
-            "and upper(c.name) like concat_ws('%', upper(:#{#customer.name}), '%') " +
-            "and upper(c.surname) like concat_ws('%', upper(:#{#customer.surname}), '%') " +
-            "and upper(c.streetName) like concat_ws('%', upper(:#{#customer.streetName}), '%') " +
-            "and upper(c.streetNumber) like concat_ws('%', upper(:#{#customer.streetNumber}), '%') " +
-            "and upper(c.postalCode) like concat_ws('%', upper(:#{#customer.postalCode}), '%') " +
-            "and upper(c.town) like concat_ws('%', upper(:#{#customer.town}), '%') " +
-            "and upper(c.phone) like concat_ws('%', upper(:#{#customer.phone}), '%') ")
+            "c.customerId like concat_ws('%', '%', :#{#customer.customerId}, '%') " +
+            "and upper(c.name) like concat_ws('%', '%', upper(:#{#customer.name}), '%') " +
+            "and upper(c.surname) like concat_ws('%', '%', upper(:#{#customer.surname}), '%') " +
+            "and upper(c.streetName) like concat_ws('%', '%', upper(:#{#customer.streetName}), '%') " +
+            "and upper(c.streetNumber) like concat_ws('%', '%', upper(:#{#customer.streetNumber}), '%') " +
+            "and upper(c.postalCode) like concat_ws('%', '%', upper(:#{#customer.postalCode}), '%') " +
+            "and upper(c.town) like concat_ws('%', '%', upper(:#{#customer.town}), '%') " +
+            "and upper(c.phone) like concat_ws('%', '%', upper(:#{#customer.phone}), '%') " +
+            "and upper(c.user.email) like concat_ws('%', '%', upper(:#{#customer.email}), '%') " +
+            "and (:#{#customer.enabled} is null or (c.user.enabled = :#{#customer.enabled})) ")
     Page<Customer> findAll(Pageable pageable, @Param("customer") CustomerItemRequest customer);
 
 }
-
-/*
-    private String email;
-    private boolean enabled;
- */
