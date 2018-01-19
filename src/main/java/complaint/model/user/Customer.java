@@ -50,4 +50,14 @@ public class Customer {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Complaint> complaints;
 
+    public void initWithEmptyValues() {
+        this.name = "";
+        this.surname = "";
+        this.streetName = "";
+        this.streetNumber = "";
+        this.postalCode = "";
+        this.town = "";
+        this.phone = "";
+    }
+
 }

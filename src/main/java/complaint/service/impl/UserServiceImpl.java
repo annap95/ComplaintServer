@@ -1,5 +1,6 @@
 package complaint.service.impl;
 
+import complaint.controller.user.request.CustomerItemRequest;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
@@ -9,6 +10,8 @@ import complaint.repository.user.EmployeeRepository;
 import complaint.repository.user.UserRepository;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -140,11 +143,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<Customer> getCustomers() {
-        return customerRepository.findAll();
-    }
-
-    @Override
     public List<Employee> getEmployees() {
         return employeeRepository.findAll();
     }
@@ -159,5 +157,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return new org.springframework.security.core.userdetails
                 .User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    @Override
+    public Page<Customer> getCustomers(Pageable pageable, CustomerItemRequest customerItemRequest) {
+        return customerRepository.findAll(pageable, customerItemRequest);
     }
 }

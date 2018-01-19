@@ -43,6 +43,7 @@ public class UserLoginRegisterController {
                 .enabled(true)
                 .build();
         Customer customer = new Customer();
+        customer.initWithEmptyValues();
         userService.addCustomerUser(user, customer);
     }
 

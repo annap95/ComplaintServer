@@ -1,6 +1,10 @@
 package complaint.controller.user;
 
+import complaint.controller.pagination.PaginationRequest;
+import complaint.controller.pagination.PaginationResponse;
 import complaint.controller.user.mapper.UserMapper;
+import complaint.controller.user.request.CustomerItemRequest;
+import complaint.controller.user.request.EmployeeItemRequest;
 import complaint.controller.user.response.CustomerResponse;
 import complaint.controller.user.response.EmployeeResponse;
 import complaint.model.user.Customer;
@@ -8,11 +12,13 @@ import complaint.model.user.Employee;
 import complaint.model.user.User;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserReadController {
@@ -46,15 +52,32 @@ public class UserReadController {
         return userMapper.mapEmployeeToEmployeeResponse(employee, employeeResponse);
     }
 
-    @RequestMapping(value = "/user/customer", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/customer", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public List<CustomerResponse> getCustomers(Authentication authentication) {
-        return null;
+    public PaginationResponse getCustomers(@RequestBody PaginationRequest<CustomerItemRequest> paginationRequest) {
+        CustomerItemRequest customerItemRequest = paginationRequest.getFilterOptions();
+        if(customerItemRequest == null)
+            customerItemRequest = new CustomerItemRequest();
+
+        Page<Customer> page =
+                userService.getCustomers(paginationRequest.mapToPageable(CustomerItemRequest.class), customerItemRequest);
+
+        return PaginationResponse.builder()
+                .totalItems(page.getTotalElements())
+                .items(page.getContent()
+                        .stream()
+                        .map(userMapper::mapCustomerToCustomerItemResponse)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
-    @RequestMapping(value = "/user/employee", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/employee", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public List<EmployeeResponse> getEmployees(Authentication authentication) {
+    public PaginationResponse getEmployees(@RequestBody PaginationRequest<EmployeeItemRequest> paginationRequest) {
+        EmployeeItemRequest employeeItemRequest = paginationRequest.getFilterOptions();
+        if(employeeItemRequest == null)
+            employeeItemRequest = new EmployeeItemRequest();
+
         return null;
     }
 
