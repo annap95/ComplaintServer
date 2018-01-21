@@ -25,6 +25,6 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
             "and upper(e.user.email) like concat_ws('%', '%', upper(:#{#employee.email}), '%') " +
             "and upper(e.user.userRole) like concat_ws('%', '%', upper(:#{#employee.userRole}), '%') " +
             "and (:#{#employee.enabled} is null or (e.user.enabled = :#{#employee.enabled}))")
-    Page<Employee> findAll(Pageable pageable, @Param("employee")EmployeeItemRequest employee);
+    Page<Employee> findAll(Pageable pageable, @Param("employee") EmployeeItemRequest employee);
 
 }

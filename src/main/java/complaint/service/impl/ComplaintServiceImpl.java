@@ -1,5 +1,6 @@
 package complaint.service.impl;
 
+import complaint.controller.complaint.request.ComplaintItemRequest;
 import complaint.model.complaint.*;
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.user.Customer;
@@ -9,6 +10,8 @@ import complaint.repository.complaint.CustomerComplaintMessageRepository;
 import complaint.repository.complaint.EmployeeComplaintMessageRepository;
 import complaint.service.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -65,8 +68,8 @@ public class ComplaintServiceImpl implements ComplaintService {
     }
 
     @Override
-    public List<Complaint> getComplaints() {
-        return complaintRepository.findAll();
+    public Page<Complaint> getComplaints(Pageable pageable, ComplaintItemRequest complaintItemRequest) {
+        return complaintRepository.findAll(pageable, complaintItemRequest);
     }
 
     @Override

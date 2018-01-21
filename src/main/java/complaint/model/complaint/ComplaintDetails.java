@@ -1,6 +1,5 @@
 package complaint.model.complaint;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +19,6 @@ public class ComplaintDetails {
     @Column(name = "complaint_detail_id")
     private long complaintDetailId;
 
-    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "complaint_id")
     private Complaint complaint;

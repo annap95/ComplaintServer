@@ -30,7 +30,7 @@ public class ComplaintWriteController {
         this.complaintService = complaintService;
     }
 
-    @RequestMapping(value = "/complaint", method = RequestMethod.POST)
+    @RequestMapping(value = "/complaint", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.CREATED)
     public void addComplaint(@RequestBody ComplaintAddRequest request, Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
