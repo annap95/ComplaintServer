@@ -17,7 +17,7 @@ public class ComplaintItemResponse {
 
     private ComplaintStatus status;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date submitDate;
 
     private String name;

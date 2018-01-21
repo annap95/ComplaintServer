@@ -6,6 +6,8 @@ import complaint.controller.complaint.response.ComplaintResponse;
 import complaint.controller.pagination.PaginationRequest;
 import complaint.controller.pagination.PaginationResponse;
 import complaint.model.complaint.Complaint;
+import complaint.model.user.Customer;
+import complaint.model.user.User;
 import complaint.service.ComplaintService;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +35,21 @@ public class ComplaintReadController {
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public PaginationResponse getComplaints(@RequestBody PaginationRequest<ComplaintItemRequest> paginationRequest) {
+    public PaginationResponse getComplaints(@RequestBody PaginationRequest<ComplaintItemRequest> paginationRequest,
+                                            Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+
         ComplaintItemRequest complaintItemRequest = paginationRequest.getFilterOptions();
         if(complaintItemRequest == null)
             complaintItemRequest = new ComplaintItemRequest();
 
-        Page<Complaint> page =
-                complaintService.getComplaints(paginationRequest.mapToPageable(ComplaintItemRequest.class), complaintItemRequest);
+        Page<Complaint> page;
+        if(loggedUser.isEmployee())
+            page = complaintService.getComplaintsAsEmployee(paginationRequest.mapToPageable(ComplaintItemRequest.class), complaintItemRequest);
+        else {
+            Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
+            page = complaintService.getComplaintsAsCustomer(paginationRequest.mapToPageable(ComplaintItemRequest.class), complaintItemRequest, customer);
+        }
 
         return PaginationResponse.builder()
                 .totalItems(page.getTotalElements())
@@ -50,10 +60,10 @@ public class ComplaintReadController {
                 .build();
     }
 
-    @RequestMapping(value = "/complaint/{complaintId}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public ComplaintResponse getComplaint(@PathVariable(name = "complaintId") long complaintId, Authentication authentication) {
-        Complaint complaint = complaintService.getComplaintById(complaintId);
-        return new ComplaintResponse(complaint);
-    }
+//    @RequestMapping(value = "/complaint/{complaintId}", method = RequestMethod.GET)
+//    @ResponseStatus(HttpStatus.OK)
+//    public ComplaintResponse getComplaint(@PathVariable(name = "complaintId") long complaintId, Authentication authentication) {
+//        Complaint complaint = complaintService.getComplaintById(complaintId);
+//        return new ComplaintResponse(complaint);
+//    }
 }

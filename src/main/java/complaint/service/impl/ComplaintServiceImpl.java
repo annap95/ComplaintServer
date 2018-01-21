@@ -5,9 +5,8 @@ import complaint.model.complaint.*;
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.user.Customer;
 import complaint.repository.complaint.ComplaintDetailsRepository;
+import complaint.repository.complaint.ComplaintMessageRepository;
 import complaint.repository.complaint.ComplaintRepository;
-import complaint.repository.complaint.CustomerComplaintMessageRepository;
-import complaint.repository.complaint.EmployeeComplaintMessageRepository;
 import complaint.service.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,29 +14,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class ComplaintServiceImpl implements ComplaintService {
 
     private final ComplaintRepository complaintRepository;
     private final ComplaintDetailsRepository complaintDetailsRepository;
-    private final CustomerComplaintMessageRepository customerComplaintMessageRepository;
-    private final EmployeeComplaintMessageRepository employeeComplaintMessageRepository;
+    private final ComplaintMessageRepository complaintMessageRepository;
 
     @Autowired
     public ComplaintServiceImpl(ComplaintRepository complaintRepository,
                                 ComplaintDetailsRepository complaintDetailsRepository,
-                                CustomerComplaintMessageRepository customerComplaintMessageRepository,
-                                EmployeeComplaintMessageRepository employeeComplaintMessageRepository) {
+                                ComplaintMessageRepository complaintMessageRepository) {
         this.complaintRepository = complaintRepository;
         this.complaintDetailsRepository = complaintDetailsRepository;
-        this.customerComplaintMessageRepository = customerComplaintMessageRepository;
-        this.employeeComplaintMessageRepository = employeeComplaintMessageRepository;
+        this.complaintMessageRepository = complaintMessageRepository;
     }
 
     @Override
-    public void addComplaint(Customer customer, ComplaintDetails complaintDetails, CustomerComplaintMessage customerComplaintMessage) {
+    public void addComplaint(Customer customer, ComplaintDetails complaintDetails, ComplaintMessage complaintMessage) {
         Complaint savedComplaint = complaintRepository.saveAndFlush(Complaint.builder()
             .customer(customer)
             .submitDate(new Date())
@@ -45,31 +40,28 @@ public class ComplaintServiceImpl implements ComplaintService {
             .build());
         complaintDetails.setComplaint(savedComplaint);
         complaintDetailsRepository.save(complaintDetails);
-        customerComplaintMessage.setComplaint(savedComplaint);
-        customerComplaintMessageRepository.save(customerComplaintMessage);
+        complaintMessage.setComplaint(savedComplaint);
+        complaintMessageRepository.save(complaintMessage);
     }
 
     @Override
-    public void addCustomerComplaintMessage(long complaintId, CustomerComplaintMessage customerComplaintMessage) {
+    public void addComplaintMessage(long complaintId, ComplaintMessage complaintMessage) {
         // todo status, exception
         Complaint complaint = complaintRepository.findByComplaintId(complaintId)
                 .orElseThrow(() -> new RuntimeException("Complaint not found"));
-        customerComplaintMessage.setComplaint(complaint);
-        customerComplaintMessageRepository.save(customerComplaintMessage);
+        complaintMessage.setComplaint(complaint);
+        complaintMessageRepository.save(complaintMessage);
     }
 
     @Override
-    public void addEmployeeComplaintMessage(long complaintId, EmployeeComplaintMessage employeeComplaintMessage) {
-        // todo status, exception
-        Complaint complaint = complaintRepository.findByComplaintId(complaintId)
-                .orElseThrow(() -> new RuntimeException("Complaint not found"));
-        employeeComplaintMessage.setComplaint(complaint);
-        employeeComplaintMessageRepository.save(employeeComplaintMessage);
+    public Page<Complaint> getComplaintsAsEmployee(Pageable pageable, ComplaintItemRequest complaintItemRequest) {
+        return complaintRepository.findAllAsEmployee(pageable, complaintItemRequest);
     }
 
     @Override
-    public Page<Complaint> getComplaints(Pageable pageable, ComplaintItemRequest complaintItemRequest) {
-        return complaintRepository.findAll(pageable, complaintItemRequest);
+    public Page<Complaint> getComplaintsAsCustomer(Pageable pageable, ComplaintItemRequest complaintItemRequest,
+                                                  Customer customer) {
+        return complaintRepository.findAllAsCustomer(pageable, complaintItemRequest, customer);
     }
 
     @Override

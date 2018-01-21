@@ -1,173 +1,136 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet author="anna (generated)" id="1509449331251-1">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="anna (generated)" id="1516567339150-1">
+        <createTable tableName="complaint_messages">
+            <column autoIncrement="true" name="complaint_message_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="claim" type="VARCHAR(25)"/>
+            <column name="date" type="datetime(6)"/>
+            <column name="decision" type="VARCHAR(25)"/>
+            <column name="message" type="VARCHAR(450)"/>
+            <column name="message_type" type="VARCHAR(25)"/>
+            <column name="complaint_id" type="BIGINT"/>
+            <column name="employee_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="anna (generated)" id="1516567339150-2">
         <createTable tableName="complaints">
             <column autoIncrement="true" name="complaint_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="consider_date" type="datetime(6)"/>
-            <column name="status" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(25)"/>
             <column name="submit_date" type="datetime(6)"/>
             <column name="customer_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-2">
+    <changeSet author="anna (generated)" id="1516567339150-3">
         <createTable tableName="complaints_details">
             <column autoIncrement="true" name="complaint_detail_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="iban" type="VARCHAR(255)"/>
-            <column name="invoice_number" type="VARCHAR(255)"/>
+            <column name="iban" type="VARCHAR(35)"/>
+            <column name="invoice_number" type="VARCHAR(45)"/>
             <column name="price" type="DOUBLE"/>
-            <column name="product_description" type="VARCHAR(255)"/>
+            <column name="product_description" type="VARCHAR(200)"/>
             <column name="purchase_date" type="datetime(6)"/>
             <column name="complaint_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-3">
-        <createTable tableName="customer_complaint_messages">
-            <column autoIncrement="true" name="customer_complaint_message_id" type="BIGINT">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="claim" type="VARCHAR(255)"/>
-            <column name="date" type="datetime(6)"/>
-            <column name="message" type="VARCHAR(255)"/>
-            <column name="complaint_id" type="BIGINT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-4">
+    <changeSet author="anna (generated)" id="1516567339150-4">
         <createTable tableName="customers">
             <column autoIncrement="true" name="customer_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR(255)"/>
-            <column name="phone" type="VARCHAR(255)"/>
-            <column name="postal_code" type="VARCHAR(255)"/>
-            <column name="street_name" type="VARCHAR(255)"/>
-            <column name="street_number" type="VARCHAR(255)"/>
-            <column name="surname" type="VARCHAR(255)"/>
-            <column name="town" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(45)"/>
+            <column name="phone" type="VARCHAR(15)"/>
+            <column name="postal_code" type="VARCHAR(7)"/>
+            <column name="street_name" type="VARCHAR(45)"/>
+            <column name="street_number" type="VARCHAR(15)"/>
+            <column name="surname" type="VARCHAR(45)"/>
+            <column name="town" type="VARCHAR(45)"/>
             <column name="user_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-5">
-        <createTable tableName="employee_complaint_messages">
-            <column autoIncrement="true" name="employee_complaint_message_id" type="BIGINT">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="claim" type="VARCHAR(255)"/>
-            <column name="date" type="datetime(6)"/>
-            <column name="decision" type="VARCHAR(255)"/>
-            <column name="message" type="VARCHAR(255)"/>
-            <column name="complaint_id" type="BIGINT"/>
-            <column name="employee_id" type="BIGINT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-6">
+    <changeSet author="anna (generated)" id="1516567339150-5">
         <createTable tableName="employees">
             <column autoIncrement="true" name="employee_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR(255)"/>
-            <column name="surname" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(45)"/>
+            <column name="surname" type="VARCHAR(45)"/>
             <column name="user_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-7">
+    <changeSet author="anna (generated)" id="1516567339150-6">
         <createTable tableName="users">
             <column autoIncrement="true" name="user_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="email" type="VARCHAR(255)">
+            <column name="email" type="VARCHAR(45)">
                 <constraints nullable="false"/>
             </column>
             <column name="enabled" type="BIT(1)">
                 <constraints nullable="false"/>
             </column>
-            <column name="password" type="VARCHAR(255)">
+            <column name="password" type="VARCHAR(64)">
                 <constraints nullable="false"/>
             </column>
-            <column name="role" type="VARCHAR(255)">
+            <column name="role" type="VARCHAR(15)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-9">
+    <changeSet author="anna (generated)" id="1516567339150-7">
         <addUniqueConstraint columnNames="email" constraintName="UK_6dotkott2kjsp8vw4d0m25fb7" tableName="users"/>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-10">
+    <changeSet author="anna (generated)" id="1516567339150-8">
+        <createIndex indexName="FK3kv113n85hgryjul8t1cu4p1g" tableName="complaints_details">
+            <column name="complaint_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="anna (generated)" id="1516567339150-9">
+        <createIndex indexName="FK5nen7c85jhue08yb49jkdofr3" tableName="complaint_messages">
+            <column name="employee_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="anna (generated)" id="1516567339150-10">
         <createIndex indexName="FK69x3vjuy1t5p18a5llb8h2fjx" tableName="employees">
             <column name="user_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-11">
-        <createIndex indexName="FKey91fng61lu6oiuhmjh36r44o" tableName="customer_complaint_messages">
+    <changeSet author="anna (generated)" id="1516567339150-11">
+        <createIndex indexName="FKfaa2tkulylgc4rcqn8vl4udkq" tableName="complaint_messages">
             <column name="complaint_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-12">
-        <createIndex indexName="FKmlaygxlpt9vkgddugr8xc8bef" tableName="employee_complaint_messages">
-            <column name="employee_id"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-13">
+    <changeSet author="anna (generated)" id="1516567339150-12">
         <createIndex indexName="FKmua2lxim39d851mt78cu4vbtk" tableName="complaints">
             <column name="customer_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-14">
-        <createIndex indexName="FKrgkoemotinoym6ofrklc75pq9" tableName="employee_complaint_messages">
-            <column name="complaint_id"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-15">
+    <changeSet author="anna (generated)" id="1516567339150-13">
         <createIndex indexName="FKrh1g1a20omjmn6kurd35o3eit" tableName="customers">
             <column name="user_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-16">
-        <addForeignKeyConstraint baseColumnNames="complaint_id" baseTableName="complaints_details"
-                                 constraintName="FK3kv113n85hgryjul8t1cu4p1g" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="complaint_id" referencedTableName="complaints"/>
+    <changeSet author="anna (generated)" id="1516567339150-14">
+        <addForeignKeyConstraint baseColumnNames="complaint_id" baseTableName="complaints_details" constraintName="FK3kv113n85hgryjul8t1cu4p1g" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="complaint_id" referencedTableName="complaints"/>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-17">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="employees"
-                                 constraintName="FK69x3vjuy1t5p18a5llb8h2fjx" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="user_id" referencedTableName="users"/>
+    <changeSet author="anna (generated)" id="1516567339150-15">
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="complaint_messages" constraintName="FK5nen7c85jhue08yb49jkdofr3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="employee_id" referencedTableName="employees"/>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-18">
-        <addForeignKeyConstraint baseColumnNames="complaint_id" baseTableName="customer_complaint_messages"
-                                 constraintName="FKey91fng61lu6oiuhmjh36r44o" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="complaint_id" referencedTableName="complaints"/>
+    <changeSet author="anna (generated)" id="1516567339150-16">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="employees" constraintName="FK69x3vjuy1t5p18a5llb8h2fjx" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-19">
-        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="employee_complaint_messages"
-                                 constraintName="FKmlaygxlpt9vkgddugr8xc8bef" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="employee_id" referencedTableName="employees"/>
+    <changeSet author="anna (generated)" id="1516567339150-17">
+        <addForeignKeyConstraint baseColumnNames="complaint_id" baseTableName="complaint_messages" constraintName="FKfaa2tkulylgc4rcqn8vl4udkq" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="complaint_id" referencedTableName="complaints"/>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-20">
-        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="complaints"
-                                 constraintName="FKmua2lxim39d851mt78cu4vbtk" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="customer_id" referencedTableName="customers"/>
+    <changeSet author="anna (generated)" id="1516567339150-18">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="complaints" constraintName="FKmua2lxim39d851mt78cu4vbtk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="customer_id" referencedTableName="customers"/>
     </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-21">
-        <addForeignKeyConstraint baseColumnNames="complaint_id" baseTableName="employee_complaint_messages"
-                                 constraintName="FKrgkoemotinoym6ofrklc75pq9" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="complaint_id" referencedTableName="complaints"/>
-    </changeSet>
-    <changeSet author="anna (generated)" id="1509449331251-22">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="customers"
-                                 constraintName="FKrh1g1a20omjmn6kurd35o3eit" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="user_id" referencedTableName="users"/>
+    <changeSet author="anna (generated)" id="1516567339150-19">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="customers" constraintName="FKrh1g1a20omjmn6kurd35o3eit" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
     </changeSet>
 </databaseChangeLog>

@@ -4,8 +4,8 @@ import complaint.controller.complaint.request.ComplaintAddRequest;
 import complaint.controller.complaint.request.CustomerComplaintMessageAddRequest;
 import complaint.controller.complaint.request.EmployeeComplaintMessageAddRequest;
 import complaint.model.complaint.ComplaintDetails;
-import complaint.model.complaint.CustomerComplaintMessage;
-import complaint.model.complaint.EmployeeComplaintMessage;
+import complaint.model.complaint.ComplaintMessage;
+import complaint.model.complaint.enums.MessageType;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
@@ -42,46 +42,47 @@ public class ComplaintWriteController {
                 .price(request.getPrice())
                 .iban(request.getIban())
                 .build();
-        CustomerComplaintMessage customerComplaintMessage = CustomerComplaintMessage.builder()
+        ComplaintMessage complaintMessage = ComplaintMessage.builder()
                 .message(request.getMessage())
                 .claim(request.getClaim())
+                .messageType(MessageType.CUSTOMER)
                 .date(new Date())
                 .build();
-        complaintService.addComplaint(customer, complaintDetails, customerComplaintMessage);
+        complaintService.addComplaint(customer, complaintDetails, complaintMessage);
     }
 
-    @RequestMapping(value = "/complaint/{complaintId}/customer", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addCustomerComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
-                                            @RequestBody CustomerComplaintMessageAddRequest request,
-                                            Authentication authentication) {
-        User loggedUser = (User) authentication.getPrincipal();
-        Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
-        // todo
-        CustomerComplaintMessage customerComplaintMessage = CustomerComplaintMessage.builder()
-                .message(request.getMessage())
-                .claim(request.getClaim())
-                .date(new Date())
-                .build();
-        complaintService.addCustomerComplaintMessage(complaintId, customerComplaintMessage);
-
-    }
-
-    @RequestMapping(value = "/complaint/{complaintId}/employee", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addEmployeeComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
-                                            @RequestBody EmployeeComplaintMessageAddRequest request,
-                                            Authentication authentication) {
-        User loggedUser = (User) authentication.getPrincipal();
-        Employee employee = userService.getEmployeeByUser(loggedUser.getUserId());
-        EmployeeComplaintMessage employeeComplaintMessage = EmployeeComplaintMessage.builder()
-                .message(request.getMessage())
-                .claim(request.getClaim())
-                .decision(request.getDecision())
-                .date(new Date())
-                .employee(employee)
-                .build();
-        complaintService.addEmployeeComplaintMessage(complaintId, employeeComplaintMessage);
-    }
+//    @RequestMapping(value = "/complaint/{complaintId}/customer", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void addCustomerComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
+//                                            @RequestBody CustomerComplaintMessageAddRequest request,
+//                                            Authentication authentication) {
+//        User loggedUser = (User) authentication.getPrincipal();
+//        Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
+//        // todo
+//        ComplaintMessage complaintMessage = CustomerComplaintMessage.builder()
+//                .message(request.getMessage())
+//                .claim(request.getClaim())
+//                .date(new Date())
+//                .build();
+//        complaintService.addCustomerComplaintMessage(complaintId, customerComplaintMessage);
+//
+//    }
+//
+//    @RequestMapping(value = "/complaint/{complaintId}/employee", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void addEmployeeComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
+//                                            @RequestBody EmployeeComplaintMessageAddRequest request,
+//                                            Authentication authentication) {
+//        User loggedUser = (User) authentication.getPrincipal();
+//        Employee employee = userService.getEmployeeByUser(loggedUser.getUserId());
+//        EmployeeComplaintMessage employeeComplaintMessage = EmployeeComplaintMessage.builder()
+//                .message(request.getMessage())
+//                .claim(request.getClaim())
+//                .decision(request.getDecision())
+//                .date(new Date())
+//                .employee(employee)
+//                .build();
+//        complaintService.addEmployeeComplaintMessage(complaintId, employeeComplaintMessage);
+//    }
 
 }

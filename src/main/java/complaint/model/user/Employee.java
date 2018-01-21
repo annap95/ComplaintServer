@@ -1,6 +1,6 @@
 package complaint.model.user;
 
-import complaint.model.complaint.EmployeeComplaintMessage;
+import complaint.model.complaint.ComplaintMessage;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +31,6 @@ public class Employee {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
-    private List<EmployeeComplaintMessage> employeeComplaintMessages;
+    private List<ComplaintMessage> complaintMessages;
 
 }

@@ -30,10 +30,7 @@ public class Complaint {
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "complaint")
-    private List<CustomerComplaintMessage> customerComplaintMessages;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "complaint")
-    private List<EmployeeComplaintMessage> employeeComplaintMessages;
+    private List<ComplaintMessage> complaintMessages;
 
     @Column(name = "submit_date")
     private Date submitDate;

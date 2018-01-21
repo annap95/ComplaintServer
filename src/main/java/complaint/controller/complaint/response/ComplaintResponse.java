@@ -1,9 +1,7 @@
 package complaint.controller.complaint.response;
 
 import complaint.model.complaint.*;
-import complaint.model.complaint.CustomerComplaintMessage;
 import complaint.model.complaint.enums.ComplaintStatus;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,8 +19,7 @@ public class ComplaintResponse implements Serializable {
     private ComplaintDetails complaintDetails;
     private long customerId;
 
-    private List<CustomerComplaintMessage> customerComplaintMessages;
-    private List<EmployeeComplaintMessage> employeeComplaintMessages;
+    private List<ComplaintMessage> complaintMessages;
 
     private Date submitDate;
     private Date considerDate;
@@ -39,8 +36,8 @@ public class ComplaintResponse implements Serializable {
         this.complaintDetails = complaint.getComplaintDetails();
         this.customerId = complaint.getCustomer().getCustomerId();
 
-        this.customerComplaintMessages = complaint.getCustomerComplaintMessages();
-        this.employeeComplaintMessages = complaint.getEmployeeComplaintMessages();
+//        this.customerComplaintMessages = complaint.getCustomerComplaintMessages();
+//        this.employeeComplaintMessages = complaint.getEmployeeComplaintMessages();
 
         this.submitDate = complaint.getSubmitDate();
         this.considerDate = complaint.getConsiderDate();

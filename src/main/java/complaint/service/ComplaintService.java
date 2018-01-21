@@ -2,8 +2,6 @@ package complaint.service;
 
 import complaint.controller.complaint.request.ComplaintItemRequest;
 import complaint.model.complaint.*;
-import complaint.model.complaint.CustomerComplaintMessage;
-import complaint.model.complaint.EmployeeComplaintMessage;
 import complaint.model.user.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,15 +11,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public interface ComplaintService {
 
     @PreAuthorize("hasAuthority('CUSTOMER')")
-    void addComplaint(Customer customer, ComplaintDetails complaintDetails, CustomerComplaintMessage customerComplaintMessage);
+    void addComplaint(Customer customer, ComplaintDetails complaintDetails, ComplaintMessage complaintMessage);
 
-    @PreAuthorize("hasAuthority('CUSTOMER')") // todo checking customer
-    void addCustomerComplaintMessage(long complaintId, CustomerComplaintMessage customerComplaintMessage);
+    // todo checking customer
+    void addComplaintMessage(long complaintId, ComplaintMessage complaintMessage);
 
-    @PreAuthorize("hasAnyAuthority('CONSULTANT','ADMIN')")
-    void addEmployeeComplaintMessage(long complaintId, EmployeeComplaintMessage employeeComplaintMessage);
+    Page<Complaint> getComplaintsAsEmployee(Pageable pageable, ComplaintItemRequest complaintItemRequest);
 
-    Page<Complaint> getComplaints(Pageable pageable, ComplaintItemRequest complaintItemRequest);
+    Page<Complaint> getComplaintsAsCustomer(Pageable pageable, ComplaintItemRequest complaintItemRequest, Customer customer);
 
     @PostFilter("hasAnyAuthority('CONSULTANT','ADMIN') ") // todo checking customer
     Complaint getComplaintById(long complaintId);

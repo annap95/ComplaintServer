@@ -181,29 +181,29 @@
         <insert tableName="complaints">
             <column name="customer_id" value="3"/>
             <column name="status" value="SUBMITTED"/>
-            <column name="submit_date" valueDate="31-10-2017"/>
+            <column name="submit_date" valueDate="2017-10-31"/>
         </insert>
         <insert tableName="complaints">
             <column name="customer_id" value="2"/>
             <column name="status" value="SUBMITTED"/>
-            <column name="submit_date" valueDate="05-10-2017"/>
+            <column name="submit_date" valueDate="2017-10-05"/>
         </insert>
         <insert tableName="complaints">
             <column name="customer_id" value="5"/>
             <column name="status" value="SUBMITTED"/>
-            <column name="submit_date" valueDate="30-09-2017"/>
+            <column name="submit_date" valueDate="2017-09-30"/>
         </insert>
         <insert tableName="complaints">
             <column name="customer_id" value="2"/>
             <column name="status" value="SUBMITTED"/>
-            <column name="submit_date" valueDate="15-10-2017"/>
+            <column name="submit_date" valueDate="2017-10-15"/>
         </insert>
     </changeSet>
     <changeSet id="complaint-details-1" author="anna">
         <insert tableName="complaints_details">
             <column name="product_description" value="Laptop firmy XYZ"/>
             <column name="invoice_number" value="Paragon 123-456#asd"/>
-            <column name="purchase_date" valueDate="18-03-2015"/>
+            <column name="purchase_date" valueDate="2015-03-18"/>
             <column name="price" value="3650.00"/>
             <column name="iban" value="PL12345678901234567890"/>
             <column name="complaint_id" value="1"/>
@@ -211,7 +211,7 @@
         <insert tableName="complaints_details">
             <column name="product_description" value="Urzadzenie wielofunkcyjne"/>
             <column name="invoice_number" value="Faktura 453/2016"/>
-            <column name="purchase_date" valueDate="22-06-2017"/>
+            <column name="purchase_date" valueDate="2017-06-22"/>
             <column name="price" value="999.99"/>
             <column name="iban" value="PL987456321456987412589"/>
             <column name="complaint_id" value="2"/>
@@ -219,7 +219,7 @@
         <insert tableName="complaints_details">
             <column name="product_description" value="Monitor 27 cali"/>
             <column name="invoice_number" value="Faktura 543/2016"/>
-            <column name="purchase_date" valueDate="31-07-2017"/>
+            <column name="purchase_date" valueDate="2017-07-31"/>
             <column name="price" value="850.00"/>
             <column name="iban" value="PL987654147852369852140"/>
             <column name="complaint_id" value="3"/>
@@ -227,32 +227,32 @@
         <insert tableName="complaints_details">
             <column name="product_description" value="Telewizor 50 cali"/>
             <column name="invoice_number" value="Paragon 561-123#bnm"/>
-            <column name="purchase_date" valueDate="14-08-2016"/>
+            <column name="purchase_date" valueDate="2016-08-14"/>
             <column name="price" value="2950.00"/>
             <column name="iban" value="PL564841210054787870323"/>
             <column name="complaint_id" value="4"/>
         </insert>
     </changeSet>
-    <changeSet id="messages-1" author="anna">
-        <insert tableName="customer_complaint_messages">
-            <column name="claim" value="FULLPAYBACK"/>
-            <column name="date" valueDate="05-10-2017"/>
-            <column name="message" value="Message Customer Complaint Message 1"/>
-            <column name="complaint_id" value="2"/>
-        </insert>
-        <insert tableName="employee_complaint_messages">
-            <column name="claim" value="PARTIALPAYBACK"/>
-            <column name="date" valueDate="06-10-2017"/>
-            <column name="message" value="Message Employee Complaint Message 1"/>
-            <column name="decision" value="ACCEPT"/>
-            <column name="complaint_id" value="2"/>
-            <column name="employee_id" value="3"/>
-        </insert>
-        <insert tableName="customer_complaint_messages">
-            <column name="claim" value="FULLPAYBACK"/>
-            <column name="date" valueDate="07-10-2017"/>
-            <column name="message" value="Message Customer Complaint Message 2"/>
-            <column name="complaint_id" value="2"/>
-        </insert>
-    </changeSet>
+    <!--<changeSet id="messages-1" author="anna">-->
+        <!--<insert tableName="customer_complaint_messages">-->
+            <!--<column name="claim" value="FULLPAYBACK"/>-->
+            <!--<column name="date" valueDate="05-10-2017"/>-->
+            <!--<column name="message" value="Message Customer Complaint Message 1"/>-->
+            <!--<column name="complaint_id" value="2"/>-->
+        <!--</insert>-->
+        <!--<insert tableName="employee_complaint_messages">-->
+            <!--<column name="claim" value="PARTIALPAYBACK"/>-->
+            <!--<column name="date" valueDate="06-10-2017"/>-->
+            <!--<column name="message" value="Message Employee Complaint Message 1"/>-->
+            <!--<column name="decision" value="ACCEPT"/>-->
+            <!--<column name="complaint_id" value="2"/>-->
+            <!--<column name="employee_id" value="3"/>-->
+        <!--</insert>-->
+        <!--<insert tableName="customer_complaint_messages">-->
+            <!--<column name="claim" value="FULLPAYBACK"/>-->
+            <!--<column name="date" valueDate="07-10-2017"/>-->
+            <!--<column name="message" value="Message Customer Complaint Message 2"/>-->
+            <!--<column name="complaint_id" value="2"/>-->
+        <!--</insert>-->
+    <!--</changeSet>-->
 </databaseChangeLog>
