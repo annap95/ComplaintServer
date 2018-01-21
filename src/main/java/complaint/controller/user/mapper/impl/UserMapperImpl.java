@@ -5,6 +5,7 @@ import complaint.controller.user.request.CustomerRequest;
 import complaint.controller.user.request.EmployeeRequest;
 import complaint.controller.user.response.CustomerItemResponse;
 import complaint.controller.user.response.CustomerResponse;
+import complaint.controller.user.response.EmployeeItemResponse;
 import complaint.controller.user.response.EmployeeResponse;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
@@ -70,4 +71,17 @@ public class UserMapperImpl implements UserMapper {
         employeeResponse.setRole(employee.getUser().getUserRole());
         return employeeResponse;
     }
+
+    @Override
+    public EmployeeItemResponse mapEmployeeToEmployeeItemResponse(Employee employee) {
+        EmployeeItemResponse employeeItemResponse = new EmployeeItemResponse();
+        employeeItemResponse.setEmployeeId(employee.getEmployeeId());
+        employeeItemResponse.setName(employee.getName());
+        employeeItemResponse.setSurname(employee.getSurname());
+        employeeItemResponse.setUserRole(employee.getUser().getUserRole());
+        employeeItemResponse.setEmail(employee.getUser().getEmail());
+        employeeItemResponse.setEnabled(employee.getUser().isEnabled());
+        return employeeItemResponse;
+    }
+
 }

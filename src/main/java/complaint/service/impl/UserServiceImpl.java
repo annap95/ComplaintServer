@@ -1,6 +1,7 @@
 package complaint.service.impl;
 
 import complaint.controller.user.request.CustomerItemRequest;
+import complaint.controller.user.request.EmployeeItemRequest;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
@@ -61,8 +62,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void validateChangeRole(User user) {
-        if(user.getUserRole() != UserRole.ADMIN)
+    public void validatePutCustomerUser(User user) {
+        if(!user.isEmployee())
+            throw new SecurityException("Authorization failed");
+    }
+
+    @Override
+    public void validatePutEmployeeUser(User currentUser, User updatedUser) {
+        if(!currentUser.isEmployee())
+            throw new SecurityException("Authorization failed");
+        if(currentUser.getUserId() == updatedUser.getUserId())
             throw new SecurityException("Authorization failed");
     }
 
@@ -81,13 +90,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
     public void updateCustomer(Customer customer) {
         customerRepository.save(customer);
     }
 
     @Override
     public void updateEmployee(Employee employee) {
-
+        employeeRepository.save(employee);
     }
 
     @Override
@@ -133,21 +147,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void enableUser(User user) {
-
-    }
-
-    @Override
-    public void disableUser(User user) {
-
-    }
-
-    @Override
-    public List<Employee> getEmployees() {
-        return employeeRepository.findAll();
-    }
-
-    @Override
     public UserDetails loadUserByUsername(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -162,5 +161,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public Page<Customer> getCustomers(Pageable pageable, CustomerItemRequest customerItemRequest) {
         return customerRepository.findAll(pageable, customerItemRequest);
+    }
+
+    @Override
+    public Page<Employee> getEmployees(Pageable pageable, EmployeeItemRequest employeeItemRequest) {
+        return employeeRepository.findAll(pageable, employeeItemRequest);
     }
 }

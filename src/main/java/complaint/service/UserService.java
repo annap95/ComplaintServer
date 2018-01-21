@@ -1,12 +1,11 @@
 package complaint.service;
 
 import complaint.controller.user.request.CustomerItemRequest;
+import complaint.controller.user.request.EmployeeItemRequest;
 import complaint.model.user.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-
-import java.util.List;
 
 public interface UserService {
 
@@ -20,7 +19,9 @@ public interface UserService {
 
     void validatePutEmployee(User user, Employee employee);
 
-    void validateChangeRole(User user);
+    void validatePutCustomerUser(User user);
+
+    void validatePutEmployeeUser(User currentUser, User updatedUser);
 
     /* adding and updating */
 
@@ -29,9 +30,13 @@ public interface UserService {
     @PreAuthorize("hasAuthority('ADMIN')")
     void addEmployeeUser(User user, Employee employee);
 
+    void updateUser(User user);
+
     void updateCustomer(Customer customer);
 
     void updateEmployee(Employee employee);
+
+    /* getting */
 
     User getUserById(long id);
 
@@ -45,17 +50,9 @@ public interface UserService {
 
     Employee getEmployeeById(long employeeId);
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    void enableUser(User user);
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-    void disableUser(User user);
-
-//    @PreAuthorize("hasAnyAuthority('ADMIN','CONSULTANT')")
-//    List<Customer> getCustomers();
-
     @PreAuthorize("hasAnyAuthority('ADMIN','CONSULTANT')")
-    List<Employee> getEmployees();
-
     Page<Customer> getCustomers(Pageable pageable, CustomerItemRequest customerItemRequest);
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    Page<Employee> getEmployees(Pageable pageable, EmployeeItemRequest employeeItemRequest);
 }

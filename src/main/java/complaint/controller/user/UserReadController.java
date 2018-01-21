@@ -77,9 +77,16 @@ public class UserReadController {
         if(employeeItemRequest == null)
             employeeItemRequest = new EmployeeItemRequest();
 
+        Page<Employee> page =
+                userService.getEmployees(paginationRequest.mapToPageable(EmployeeItemRequest.class), employeeItemRequest);
 
-
-        return null;
+        return PaginationResponse.builder()
+                .totalItems(page.getTotalElements())
+                .items(page.getContent()
+                        .stream()
+                        .map(userMapper::mapEmployeeToEmployeeItemResponse)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
 }

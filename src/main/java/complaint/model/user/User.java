@@ -1,6 +1,5 @@
 package complaint.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import complaint.model.user.enums.UserRole;
 import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -27,7 +26,6 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
-    @JsonIgnore
     @NotNull
     @NotEmpty
     @Column(name = "password")
@@ -44,5 +42,9 @@ public class User {
 
     public boolean isEmployee() {
         return this.userRole == UserRole.ADMIN || this.userRole == UserRole.CONSULTANT;
+    }
+
+    public boolean isAdmin() {
+        return this.userRole == UserRole.ADMIN;
     }
 }
