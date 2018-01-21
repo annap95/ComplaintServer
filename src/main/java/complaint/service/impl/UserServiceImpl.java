@@ -44,6 +44,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void validateEmployeeRegister(User user) {
+        if(!user.isAdmin())
+            throw new SecurityException("Authorization failed");
+    }
+
+    @Override
     public void validateGetCustomer(User user, Customer customer) {
         if(!user.isEmployee() && customer.getUser().getUserId() != user.getUserId())
             throw new SecurityException("Authorization failed");

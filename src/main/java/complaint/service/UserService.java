@@ -13,6 +13,8 @@ public interface UserService {
 
     void validateRegister(String email);
 
+    void validateEmployeeRegister(User user);
+
     void validateGetCustomer(User user, Customer customer);
 
     void validatePutCustomer(User user, Customer customer);

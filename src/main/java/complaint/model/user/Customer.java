@@ -1,6 +1,5 @@
 package complaint.model.user;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import complaint.model.complaint.Complaint;
 import lombok.*;
 
@@ -46,7 +45,6 @@ public class Customer {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Complaint> complaints;
 

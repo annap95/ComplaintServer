@@ -11,4 +11,5 @@ public class SortOptions {
     String columnName;
 
     String direction;
+    
 }

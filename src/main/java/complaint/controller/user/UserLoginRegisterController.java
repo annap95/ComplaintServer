@@ -11,6 +11,7 @@ import complaint.config.security.TokenService;
 import complaint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,10 @@ public class UserLoginRegisterController {
     @RequestMapping(value = "/auth/register/employee", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void registerEmployee(@RequestHeader(value = "Authorization") String credentials,
-                                 @RequestBody EmployeeRequest employeeRequest) {
+                                 @RequestBody EmployeeRequest employeeRequest,
+                                 Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+        userService.validateEmployeeRegister(loggedUser);
         CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
         userService.validateRegister(credentialsRequest.getEmail());
         User user = User.builder()
@@ -71,7 +75,7 @@ public class UserLoginRegisterController {
     public TokenResponse login(@RequestHeader(value = "Authorization") String credentials) {
         CredentialsRequest credentialsRequest = this.decodeCredentialsRequest(credentials);
         User user = userService.getUserByEmail(credentialsRequest.getEmail());
-        if(!passwordEncoder.matches(credentialsRequest.getPassword(), user.getPassword()))
+        if(!passwordEncoder.matches(credentialsRequest.getPassword(), user.getPassword()) || !user.isEnabled())
             throw new SecurityException("Authentication failed");
         Long customerId = null;
         Long employeeId = null;
