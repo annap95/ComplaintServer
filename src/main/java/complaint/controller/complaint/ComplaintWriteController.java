@@ -57,8 +57,7 @@ public class ComplaintWriteController {
                                             @RequestBody CustomerComplaintMessageAddRequest request,
                                             Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
-        Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
-        // validate add TODO
+        complaintService.validateAddingCustomerComplaintMessage(complaintId, loggedUser);
         ComplaintMessage complaintMessage = ComplaintMessage.builder()
                 .message(request.getMessage())
                 .claim(request.getClaim())
@@ -75,7 +74,7 @@ public class ComplaintWriteController {
                                             Authentication authentication) {
         User loggedUser = (User) authentication.getPrincipal();
         Employee employee = userService.getEmployeeByUser(loggedUser.getUserId());
-        // validate add TODO
+        complaintService.validateAddingEmployeeComplaintMessage(complaintId, loggedUser);
         ComplaintMessage complaintMessage = ComplaintMessage.builder()
                 .message(request.getMessage())
                 .claim(request.getClaim())

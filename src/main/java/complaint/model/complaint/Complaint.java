@@ -1,5 +1,6 @@
 package complaint.model.complaint;
 
+import complaint.model.complaint.enums.Claim;
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.user.Customer;
 import lombok.*;
@@ -42,6 +43,12 @@ public class Complaint {
     @Enumerated(EnumType.STRING)
     private ComplaintStatus status;
 
-    // current / final claim
+    @Column(name = "current_customer_claim")
+    @Enumerated(EnumType.STRING)
+    private Claim currentCustomerClaim;
+
+    @Column(name = "current_employee_claim")
+    @Enumerated(EnumType.STRING)
+    private Claim currentEmployeeClaim;
 
 }

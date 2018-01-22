@@ -3,6 +3,8 @@ package complaint.service.impl;
 import complaint.controller.complaint.request.ComplaintItemRequest;
 import complaint.model.complaint.*;
 import complaint.model.complaint.enums.ComplaintStatus;
+import complaint.model.complaint.enums.Decision;
+import complaint.model.complaint.enums.MessageType;
 import complaint.model.user.Customer;
 import complaint.model.user.User;
 import complaint.repository.complaint.ComplaintDetailsRepository;
@@ -39,11 +41,26 @@ public class ComplaintServiceImpl implements ComplaintService {
     }
 
     @Override
+    public void validateAddingCustomerComplaintMessage(Long complaintId, User user) {
+        Complaint complaint = complaintRepository.findByComplaintId(complaintId)
+                .orElseThrow(() -> new RuntimeException("Complaint not found"));
+        if(complaint.getCustomer().getUser().getUserId() != user.getUserId())
+            throw new SecurityException("Authorization failed");
+    }
+
+    @Override
+    public void validateAddingEmployeeComplaintMessage(Long complaintId, User user) {
+        if(!user.isEmployee())
+            throw new SecurityException("Authorization failed");
+    }
+
+    @Override
     public void addComplaint(Customer customer, ComplaintDetails complaintDetails, ComplaintMessage complaintMessage) {
         Complaint savedComplaint = complaintRepository.saveAndFlush(Complaint.builder()
             .customer(customer)
             .submitDate(new Date())
             .status(ComplaintStatus.SUBMITTED)
+            .currentCustomerClaim(complaintMessage.getClaim())
             .build());
         complaintDetails.setComplaint(savedComplaint);
         complaintDetailsRepository.save(complaintDetails);
@@ -53,11 +70,11 @@ public class ComplaintServiceImpl implements ComplaintService {
 
     @Override
     public void addComplaintMessage(long complaintId, ComplaintMessage complaintMessage) {
-        // todo status, exception
         Complaint complaint = complaintRepository.findByComplaintId(complaintId)
                 .orElseThrow(() -> new RuntimeException("Complaint not found"));
         complaintMessage.setComplaint(complaint);
-        complaintMessageRepository.save(complaintMessage);
+        ComplaintMessage savedComplaintMessage = complaintMessageRepository.saveAndFlush(complaintMessage);
+        processComplaint(complaint, savedComplaintMessage);
     }
 
     @Override
@@ -77,4 +94,31 @@ public class ComplaintServiceImpl implements ComplaintService {
                 .orElseThrow(() -> new RuntimeException("Complaint not found"));
     }
 
+    @Override
+    public Complaint processComplaint(Complaint complaint, ComplaintMessage complaintMessage) {
+        if(complaint.getStatus() == ComplaintStatus.ACCEPTED)
+            return complaint;
+        /* status submitted or waiting */
+        if(complaintMessage.getMessageType() == MessageType.EMPLOYEE) {
+            if(complaintMessage.getClaim() == complaint.getCurrentCustomerClaim()
+                    && complaintMessage.getDecision() == Decision.ACCEPT) {
+                complaint.setStatus(ComplaintStatus.ACCEPTED);
+                complaint.setCurrentEmployeeClaim(complaintMessage.getClaim());
+                complaint.setConsiderDate(new Date());
+            }
+            else {
+                complaint.setStatus(ComplaintStatus.WAITING);
+                complaint.setCurrentEmployeeClaim(complaintMessage.getClaim());
+            }
+        }
+        else {
+            if(complaintMessage.getClaim() == complaint.getCurrentEmployeeClaim()) {
+                complaint.setStatus(ComplaintStatus.ACCEPTED);
+                complaint.setCurrentCustomerClaim(complaintMessage.getClaim());
+            }
+            else
+                complaint.setCurrentCustomerClaim(complaintMessage.getClaim());
+        }
+        return complaintRepository.saveAndFlush(complaint);
+    }
 }

@@ -15,18 +15,25 @@ public interface ComplaintService {
 
     void validateGettingComplaint(Complaint complaint, User user);
 
+    void validateAddingCustomerComplaintMessage(Long complaintId, User user);
+
+    void validateAddingEmployeeComplaintMessage(Long complaintId, User user);
+
+    /* getting, updating */
 
     @PreAuthorize("hasAuthority('CUSTOMER')")
     void addComplaint(Customer customer, ComplaintDetails complaintDetails, ComplaintMessage complaintMessage);
 
-    // todo checking customer
     void addComplaintMessage(long complaintId, ComplaintMessage complaintMessage);
 
     Page<Complaint> getComplaintsAsEmployee(Pageable pageable, ComplaintItemRequest complaintItemRequest);
 
     Page<Complaint> getComplaintsAsCustomer(Pageable pageable, ComplaintItemRequest complaintItemRequest, Customer customer);
 
-    // todo checking customer
     Complaint getComplaintById(long complaintId);
+
+    /* process */
+
+    Complaint processComplaint(Complaint complaint, ComplaintMessage complaintMessage);
 
 }
