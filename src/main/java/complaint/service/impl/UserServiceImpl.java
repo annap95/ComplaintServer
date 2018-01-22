@@ -2,6 +2,9 @@ package complaint.service.impl;
 
 import complaint.controller.user.request.CustomerItemRequest;
 import complaint.controller.user.request.EmployeeItemRequest;
+import complaint.exception.CustomerNotFoundException;
+import complaint.exception.EmployeeNotFoundException;
+import complaint.exception.UserNotFoundException;
 import complaint.model.user.Customer;
 import complaint.model.user.Employee;
 import complaint.model.user.User;
@@ -17,6 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -113,49 +117,43 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User getUserById(long id) {
         return userRepository.findByUserId(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        // todo exception
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        // todo exception
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public Customer getCustomerByUser(long userId) {
         return customerRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
-        // todo exception
+                .orElseThrow(CustomerNotFoundException::new);
     }
 
     @Override
     public Customer getCustomerById(long customerId) {
         return customerRepository.findByCustomerId(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
-        // todo exception
+                .orElseThrow(CustomerNotFoundException::new);
     }
 
     @Override
     public Employee getEmployeeByUser(long userId) {
         return employeeRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-        // todo exception
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
     public Employee getEmployeeById(long employeeId) {
         return employeeRepository.findByEmployeeId(employeeId)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-        // todo exception
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(CustomerNotFoundException::new);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getUserRole().toString()));

@@ -1,6 +1,8 @@
 package complaint.service.impl;
 
 import complaint.controller.complaint.request.ComplaintItemRequest;
+import complaint.exception.ComplaintNotFoundException;
+import complaint.exception.CustomerNotFoundException;
 import complaint.model.complaint.*;
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.complaint.enums.Decision;
@@ -71,7 +73,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public void addComplaintMessage(long complaintId, ComplaintMessage complaintMessage) {
         Complaint complaint = complaintRepository.findByComplaintId(complaintId)
-                .orElseThrow(() -> new RuntimeException("Complaint not found"));
+                .orElseThrow(ComplaintNotFoundException::new);
         complaintMessage.setComplaint(complaint);
         ComplaintMessage savedComplaintMessage = complaintMessageRepository.saveAndFlush(complaintMessage);
         processComplaint(complaint, savedComplaintMessage);
@@ -91,7 +93,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public Complaint getComplaintById(long complaintId) {
         return complaintRepository.findByComplaintId(complaintId)
-                .orElseThrow(() -> new RuntimeException("Complaint not found"));
+                .orElseThrow(CustomerNotFoundException::new);
     }
 
     @Override
