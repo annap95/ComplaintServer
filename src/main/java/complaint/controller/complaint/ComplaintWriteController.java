@@ -51,38 +51,41 @@ public class ComplaintWriteController {
         complaintService.addComplaint(customer, complaintDetails, complaintMessage);
     }
 
-//    @RequestMapping(value = "/complaint/{complaintId}/customer", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void addCustomerComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
-//                                            @RequestBody CustomerComplaintMessageAddRequest request,
-//                                            Authentication authentication) {
-//        User loggedUser = (User) authentication.getPrincipal();
-//        Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
-//        // todo
-//        ComplaintMessage complaintMessage = CustomerComplaintMessage.builder()
-//                .message(request.getMessage())
-//                .claim(request.getClaim())
-//                .date(new Date())
-//                .build();
-//        complaintService.addCustomerComplaintMessage(complaintId, customerComplaintMessage);
-//
-//    }
-//
-//    @RequestMapping(value = "/complaint/{complaintId}/employee", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void addEmployeeComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
-//                                            @RequestBody EmployeeComplaintMessageAddRequest request,
-//                                            Authentication authentication) {
-//        User loggedUser = (User) authentication.getPrincipal();
-//        Employee employee = userService.getEmployeeByUser(loggedUser.getUserId());
-//        EmployeeComplaintMessage employeeComplaintMessage = EmployeeComplaintMessage.builder()
-//                .message(request.getMessage())
-//                .claim(request.getClaim())
-//                .decision(request.getDecision())
-//                .date(new Date())
-//                .employee(employee)
-//                .build();
-//        complaintService.addEmployeeComplaintMessage(complaintId, employeeComplaintMessage);
-//    }
+    @RequestMapping(value = "/complaint/{complaintId}/customer", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addCustomerComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
+                                            @RequestBody CustomerComplaintMessageAddRequest request,
+                                            Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+        Customer customer = userService.getCustomerByUser(loggedUser.getUserId());
+        // validate add TODO
+        ComplaintMessage complaintMessage = ComplaintMessage.builder()
+                .message(request.getMessage())
+                .claim(request.getClaim())
+                .messageType(MessageType.CUSTOMER)
+                .date(new Date())
+                .build();
+        complaintService.addComplaintMessage(complaintId, complaintMessage);
+    }
+
+    @RequestMapping(value = "/complaint/{complaintId}/employee", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addEmployeeComplaintMessage(@PathVariable(name = "complaintId") long complaintId,
+                                            @RequestBody EmployeeComplaintMessageAddRequest request,
+                                            Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+        Employee employee = userService.getEmployeeByUser(loggedUser.getUserId());
+        // validate add TODO
+        ComplaintMessage complaintMessage = ComplaintMessage.builder()
+                .message(request.getMessage())
+                .claim(request.getClaim())
+                .decision(request.getDecision())
+                .messageType(MessageType.EMPLOYEE)
+                .date(new Date())
+                .employee(employee)
+                .build();
+        complaintService.addComplaintMessage(complaintId, complaintMessage);
+
+    }
 
 }

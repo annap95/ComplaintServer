@@ -4,6 +4,7 @@ import complaint.controller.complaint.request.ComplaintItemRequest;
 import complaint.model.complaint.*;
 import complaint.model.complaint.enums.ComplaintStatus;
 import complaint.model.user.Customer;
+import complaint.model.user.User;
 import complaint.repository.complaint.ComplaintDetailsRepository;
 import complaint.repository.complaint.ComplaintMessageRepository;
 import complaint.repository.complaint.ComplaintRepository;
@@ -29,6 +30,12 @@ public class ComplaintServiceImpl implements ComplaintService {
         this.complaintRepository = complaintRepository;
         this.complaintDetailsRepository = complaintDetailsRepository;
         this.complaintMessageRepository = complaintMessageRepository;
+    }
+
+    @Override
+    public void validateGettingComplaint(Complaint complaint, User user) {
+        if(!user.isEmployee() && complaint.getCustomer().getUser().getUserId() != user.getUserId())
+            throw new SecurityException("Authorization failed");
     }
 
     @Override

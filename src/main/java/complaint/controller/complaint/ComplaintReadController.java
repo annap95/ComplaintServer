@@ -60,10 +60,12 @@ public class ComplaintReadController {
                 .build();
     }
 
-//    @RequestMapping(value = "/complaint/{complaintId}", method = RequestMethod.GET)
-//    @ResponseStatus(HttpStatus.OK)
-//    public ComplaintResponse getComplaint(@PathVariable(name = "complaintId") long complaintId, Authentication authentication) {
-//        Complaint complaint = complaintService.getComplaintById(complaintId);
-//        return new ComplaintResponse(complaint);
-//    }
+    @RequestMapping(value = "/complaint/{complaintId}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public ComplaintResponse getComplaint(@PathVariable(name = "complaintId") long complaintId, Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+        Complaint complaint = complaintService.getComplaintById(complaintId);
+        complaintService.validateGettingComplaint(complaint, loggedUser);
+        return complaintMapper.mapComplaintToComplaintResponse(complaint);
+    }
 }

@@ -1,58 +1,45 @@
 package complaint.controller.complaint.response;
 
-import complaint.model.complaint.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import complaint.controller.user.response.CustomerResponse;
 import complaint.model.complaint.enums.ComplaintStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
-public class ComplaintResponse implements Serializable {
-    private long complaintId;
-    private ComplaintDetails complaintDetails;
-    private long customerId;
+public class ComplaintResponse {
 
-    private List<ComplaintMessage> complaintMessages;
+    private Long complaintId;
 
+    private List<ComplaintMessageResponse> complaintMessages;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date submitDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date considerDate;
+
     private ComplaintStatus status;
 
+    private CustomerResponse customerResponse;
 
-//    private Long customerId;
-//    private Long employeeId;
-//    private EmployeeComplaintMessage employeeComplaintMessage;
+    /* details */
 
+    private String productDescription;
 
-    public ComplaintResponse(Complaint complaint) {
-        this.complaintId = complaint.getComplaintId();
-        this.complaintDetails = complaint.getComplaintDetails();
-        this.customerId = complaint.getCustomer().getCustomerId();
+    private String invoiceNumber;
 
-//        this.customerComplaintMessages = complaint.getCustomerComplaintMessages();
-//        this.employeeComplaintMessages = complaint.getEmployeeComplaintMessages();
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date purchaseDate;
 
-        this.submitDate = complaint.getSubmitDate();
-        this.considerDate = complaint.getConsiderDate();
-        this.status = complaint.getStatus();
-//        this.complaintId = complaint.getComplaintId();
-//        if(complaint.getCustomer() != null)
-//            this.customerId = complaint.getCustomer().getCustomerId();
-//        else
-//            this.customerId = null;
-//        if(complaint.getEmployee() != null)
-//            this.employeeId = complaint.getEmployee().getEmployeeId();
-//        else
-//            this.employeeId = null;
-//        //this.customerComplaint = complaint.getCustomerComplaint();
-//        //this.employeeComplaint = complaint.getEmployeeComplaint();
-    }
+    private Double price;
+
+    private String iban;
 
 }
