@@ -42,7 +42,8 @@ public class ComplaintMapperImpl implements ComplaintMapper {
         complaintMessageResponse.setMessageType(complaintMessage.getMessageType());
         complaintMessageResponse.setDecision(complaintMessage.getDecision());
         EmployeeResponse employeeResponse = new EmployeeResponse();
-        complaintMessageResponse.setEmployeeResponse(userMapper
+        if(complaintMessage.getEmployee() != null)
+            complaintMessageResponse.setEmployeeResponse(userMapper
                 .mapEmployeeToEmployeeResponse(complaintMessage.getEmployee(), employeeResponse));
         return complaintMessageResponse;
     }
